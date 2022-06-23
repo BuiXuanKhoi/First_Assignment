@@ -1,5 +1,8 @@
 package com.nashtech.assignment.ecommerce.services.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +29,28 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Products getProductById(int id) {
-		return this.productRepository.getById(id);
+	public Products getProductByName(String name) {
+		return this.productRepository.findProductsByName(name);
+	}
+
+	@Override
+	public ArrayList<Products> getListOfProductIncreaseInPrice()
+	{
+		int min;
+		ArrayList<Products> listOfProducts = new ArrayList<>(this.productRepository.findAll());
+		int sizeOfList = listOfProducts.size();
+		for(int i =0; i<sizeOfList;i++)
+		{
+			min = i;
+			for(int j = i +1; j < sizeOfList; j++ ) 
+			{
+				if(listOfProducts.get(min).getProductPrice() > listOfProducts.get(j).getProductPrice())
+				{
+					Collections.swap(listOfProducts, min, j);
+				}
+			}
+		}
+		return listOfProducts;
 	}
 	
 	

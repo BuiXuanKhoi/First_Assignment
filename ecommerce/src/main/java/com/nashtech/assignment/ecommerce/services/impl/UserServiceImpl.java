@@ -3,11 +3,14 @@ package com.nashtech.assignment.ecommerce.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
 import com.nashtech.assignment.ecommerce.service.UserService;
 
+
+@Service
 public class UserServiceImpl implements UserService {
 	
 	private UserRepository userRepository;
@@ -23,11 +26,9 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.findAll();
 	}
 
-	@Override
-	public Users findUserById(int id)
-	{
-		return this.userRepository.getOne(id);
-	}
+
+
+	
 	
 	
 

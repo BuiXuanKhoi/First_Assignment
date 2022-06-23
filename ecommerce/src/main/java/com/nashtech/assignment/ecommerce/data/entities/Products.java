@@ -77,9 +77,7 @@ public class Products {
 		
 	//-----------------------------
 	
-	@ManyToOne
-	@JoinColumn(name = "customer_admin_id")
-	private Customers customers;
+
 	
 	@Column(name = "product_create_day")
 	private Date productCreateDay;
@@ -108,13 +106,6 @@ public class Products {
 		this.cartItems = cartItems;
 	}
 
-	public Customers getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(Customers customers) {
-		this.customers = customers;
-	}
 
 	@Column(name = "product_update_day")
 	private Date productUpdateDay;

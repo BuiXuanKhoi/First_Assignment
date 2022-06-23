@@ -1,5 +1,6 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
+import java.security.KeyStore.PrivateKeyEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +28,33 @@ public class Roles {
 	
 	
 	
-	@Column(name = "catogery_name")
+	@Column(name = "catogery_user_role")
 	private String roleName;
 	
+	@Column(name = "catogery_user_id")
+	private int catogeryUserId;
 	
+	
+	public int getCatogeryUserId() {
+		return catogeryUserId;
+	}
+
+	public void setCatogeryUserId(int catogeryUserId) {
+		this.catogeryUserId = catogeryUserId;
+	}
+
+	public Roles(Integer roleId, String roleName, int catogeryUserId, List<Users> users) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
+		this.catogeryUserId = catogeryUserId;
+		this.users = users;
+	}
+
 	@OneToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)	
 	private List<Users> users = new ArrayList<Users>();
+	
+	
 
 	public Roles(Integer roleID) 
 	{

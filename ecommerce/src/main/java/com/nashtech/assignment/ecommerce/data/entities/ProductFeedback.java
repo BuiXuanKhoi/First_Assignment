@@ -23,39 +23,24 @@ public class ProductFeedback {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "customer_id")
-	private Customers customers;
+	@Column(name = "feedback_id")
+	private Integer feedbackId;
 	
 	@OneToOne
 	@JoinColumn(name = "product_id")
 	private Products product;
 	
-	
-	@Column(name = "product_rating")
-	private float productRating;
-	
-	@Column(name = "product_comment")
-	private String productComment;
+	@OneToOne
+	@JoinColumn(name = "customer_id")
+	private Customers customers;
 	
 	
-
-	public ProductFeedback(Customers customers, Products product, Customers customerId, float productRating,
-			String productComment) {
-		super();
-		this.customers = customers;
-		this.product = product;
-		this.customers = customerId;
-		this.productRating = productRating;
-		this.productComment = productComment;
-	}
-
-	public String getProductComment() {
-		return productComment;
-	}
-
-	public void setProductComment(String productComment) {
-		this.productComment = productComment;
-	}
+	@Column(name = "feedback_rating")
+	private float feedbackRating;
+	
+	@Column(name = "feedback_comment")
+	private String feedbackComment;
+	
 
 	public Customers getFeedbackId() {
 		return customers;
@@ -72,13 +57,44 @@ public class ProductFeedback {
 	}
 
 
-	public float getProductRating() {
-		return productRating;
+
+
+
+	public ProductFeedback(Integer feedbackId, Products product, Customers customers, float feedbackRating,
+			String feedbackComment) {
+		super();
+		this.feedbackId = feedbackId;
+		this.product = product;
+		this.customers = customers;
+		this.feedbackRating = feedbackRating;
+		this.feedbackComment = feedbackComment;
 	}
 
-	public void setProductRating(float productRating) {
-		this.productRating = productRating;
+
+	public float getFeedbackRating() {
+		return feedbackRating;
 	}
+
+
+	public void setFeedbackRating(float feedbackRating) {
+		this.feedbackRating = feedbackRating;
+	}
+
+
+	public String getFeedbackComment() {
+		return feedbackComment;
+	}
+
+
+	public void setFeedbackComment(String feedbackComment) {
+		this.feedbackComment = feedbackComment;
+	}
+
+
+	public void setFeedbackId(Integer feedbackId) {
+		this.feedbackId = feedbackId;
+	}
+
 
 	public Customers getCustomers() {
 		return customers;

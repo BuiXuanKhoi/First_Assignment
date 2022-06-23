@@ -52,16 +52,17 @@ public class Customers {
 	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CartItems> cartItems;
 	
+	@OneToOne(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private ProductFeedback productFeedback;
+	
+
+	
 	
 	
 	//---------------------------
 	
 	
 	
-	
-	
-	@Column(name = "customer_name")
-	private String customer_name;
 	
 	public int getCustomerId() {
 		return customerId;
@@ -105,69 +106,47 @@ public class Customers {
 		this.cartItems = cartItems;
 	}
 
-	public String getCustomer_name() {
-		return customer_name;
+
+
+	
+
+	public Date getCustomerDateOfBirth() {
+		return customerDateOfBirth;
 	}
 
-	public void setCustomer_name(String customer_name) {
-		this.customer_name = customer_name;
+	public void setCustomerDateOfBirth(Date customerDateOfBirth) {
+		this.customerDateOfBirth = customerDateOfBirth;
 	}
 
-	public Date getCustomer_date_of_birth() {
-		return customer_date_of_birth;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setCustomer_date_of_birth(Date customer_date_of_birth) {
-		this.customer_date_of_birth = customer_date_of_birth;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
-	public String getCustomer_address() {
-		return customer_address;
+	public long getCustomerPhoneNumber() {
+		return customerPhoneNumber;
 	}
 
-	public void setCustomer_address(String customer_address) {
-		this.customer_address = customer_address;
+	public void setCustomerPhoneNumber(long customerPhoneNumber) {
+		this.customerPhoneNumber = customerPhoneNumber;
 	}
 
-	public long getCustomer_phone_number() {
-		return customer_phone_number;
-	}
 
-	public void setCustomer_phone_number(long customer_phone_number) {
-		this.customer_phone_number = customer_phone_number;
-	}
 
-	public String getCustomer_email() {
-		return customer_email;
-	}
 
-	public void setCustomer_email(String customer_email) {
-		this.customer_email = customer_email;
-	}
-
-	public String getCustomer_password() {
-		return customer_password;
-	}
-
-	public void setCustomer_password(String customer_password) {
-		this.customer_password = customer_password;
-	}
 
 	@Column(name = "customer_date_of_birth")
-	private Date customer_date_of_birth;
+	private Date customerDateOfBirth;
 	
 	@Column(name = "customer_address")
-	private  String customer_address;
+	private  String customerAddress;
 	
-	@Column(name = "customer_phone_number")
-	private long customer_phone_number;
-	
-	@Column(name = "customer_email")
-	private String customer_email;
-	
-	@Column(name = "customer_password")
-	private String customer_password;
-	
+	@Column(name = "customer_phone_numer")
+	private long customerPhoneNumber;
+
 	
 	
 

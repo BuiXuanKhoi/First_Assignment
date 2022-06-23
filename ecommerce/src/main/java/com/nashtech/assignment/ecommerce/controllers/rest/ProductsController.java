@@ -1,5 +1,7 @@
 package com.nashtech.assignment.ecommerce.controllers.rest;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.service.ProductService;
 
-import net.bytebuddy.asm.Advice.Return;
 
 @RestController
 @RequestMapping("/products")
@@ -28,19 +29,22 @@ public class ProductsController
 		this.productService = productService;
 	}
 	
-	@GetMapping("/talk")
-	public String Hello() {
-		return "This API worked";
+	
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET )
+	public Products findProductByName(@PathVariable("name") String name) {
+		 return this.productService.getProductByName(name);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET )
-	public Products findProductById(@PathVariable("id") int id) {
-		 return this.productService.getProductById(id);
-	}
+
 	
 	
 	@GetMapping("/all")
 	public List<Products> getAllProducts() {
 		return this.productService.getAllProducts();
+	}
+	
+	@GetMapping("/price/increase")
+	public ArrayList<Products>getListOfProductIncreaseInPrice(){
+		return this.productService.getListOfProductIncreaseInPrice();
 	}
 }

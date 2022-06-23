@@ -12,6 +12,11 @@ import com.nashtech.assignment.ecommerce.data.entities.Products;
 @Repository
 public interface ProductRepository extends JpaRepository<Products, Integer> {
 	
+	@Query(value = "select * from products where product_name = :name", nativeQuery = true)
+	Products findProductsByName(String name);
+	
+	
+	
 	
 	
 	
