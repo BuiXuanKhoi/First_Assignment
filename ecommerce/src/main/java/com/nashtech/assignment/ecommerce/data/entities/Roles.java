@@ -26,6 +26,8 @@ public class Roles {
 	@Column(name = "catogery_id")
 	private Integer roleId;
 	
+	public Roles() {}
+	
 	
 	
 	@Column(name = "catogery_user_role")

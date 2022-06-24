@@ -52,6 +52,14 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return listOfProducts;
 	}
+
+	@Override
+	public Products saveProduct(Products products) {
+		
+		return this.productRepository.save(products);
+	}
+
+
 	
 	
 

@@ -26,6 +26,29 @@ public class UserServiceImpl implements UserService {
 		return this.userRepository.findAll();
 	}
 
+	@Override
+	public Users addNewUser(Users users) {
+		return this.userRepository.saveAndFlush(users);
+	}
+
+	@Override
+	public Users findUserByName(String userName) {
+		return null;
+	}
+
+	@Override
+	public Users updateUsers(Users users) {
+		return this.userRepository.saveAndFlush(users);
+	}
+
+	@Override
+	public void deleteUserById(int id) 
+	{
+		this.userRepository.deleteById(id);
+	}
+	
+	
+
 
 
 	

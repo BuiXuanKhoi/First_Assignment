@@ -18,10 +18,22 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 
-	@Override
-	public Orders findOrderByOwnerPhoneNumber(int phone) {
-		return orderRepository.findOrdersByOwnerId(phone);
+	
+	public Orders deleteOrders(Orders orders) 
+	{
+		return orders;
+		
 	}
+
+
+
+	@Override
+	public Orders createOrders(Orders orders) {
+		return this.orderRepository.save(orders);
+	}
+
+
+
 	
 	
 

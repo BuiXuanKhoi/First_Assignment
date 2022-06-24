@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductFeedback {
 	
+	public ProductFeedback() {}
+	
 	
 	@Id
 	@GeneratedValue

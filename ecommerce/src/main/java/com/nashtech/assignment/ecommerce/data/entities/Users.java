@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,14 +25,15 @@ public class Users {
 	
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int userId;
+	private Integer userId;
 	
-	public Users(int userId, String userName, String userEmail, String userPassword, Date userCreateDate,
+	public Users() {}
+	
+	public Users( String userName, String userEmail, String userPassword, Date userCreateDate,
 			Date userUpDate, Roles catogeryUserId) {
 		super();
-		this.userId = userId;
 		this.userName = userName;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;

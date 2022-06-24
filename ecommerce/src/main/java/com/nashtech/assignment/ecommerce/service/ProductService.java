@@ -14,5 +14,10 @@ public interface ProductService {
 	public Products getProductByName(String name);
 	
 	public ArrayList<Products> getListOfProductIncreaseInPrice();
+	
+	public Products saveProduct( Products products);
+	
+
+	
 
 }

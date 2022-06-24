@@ -4,6 +4,8 @@ import com.nashtech.assignment.ecommerce.data.entities.Orders;
 
 public interface OrderService {
 	
-	public Orders findOrderByOwnerPhoneNumber(int phone);
+	public Orders deleteOrders(Orders orders);
+	
+	public Orders createOrders(Orders orders);
 
 }

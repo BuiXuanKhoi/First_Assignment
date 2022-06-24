@@ -13,5 +13,9 @@ import com.nashtech.assignment.ecommerce.data.entities.Users;
 public interface UserRepository extends JpaRepository<Users, Integer> {
 	
 
+	
+
+	
+
 
 }

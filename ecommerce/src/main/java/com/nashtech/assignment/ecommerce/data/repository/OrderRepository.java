@@ -11,10 +11,5 @@ import com.nashtech.assignment.ecommerce.data.entities.Orders;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Integer>
 {
-	@Query(value = "select * from orders "
-					+ "where" + "orders.customer_id"
-			         + "in" 
-					+ "(select customers.customer_id where customers.customer_phone_number = :phone)", nativeQuery = true)
-	Orders findOrdersByOwnerId(int phone);
 
 }

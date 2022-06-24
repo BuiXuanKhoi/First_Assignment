@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Orders {
 	
+	public Orders() {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
