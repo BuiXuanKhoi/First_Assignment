@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "order_detail")
@@ -28,10 +29,12 @@ public class OrderItem {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")
+	@NonNull
 	private Customers customerId;
 	
 	
 	@Column(name = "order_address")
+	@NonNull
 	private String orderAddressString;
 	
 	
@@ -42,6 +45,7 @@ public class OrderItem {
 	
 	@OneToOne
 	@JoinColumn(name = "product_id")
+	@NonNull
 	private Products products;
 
 	public Integer getOrderItemId() {

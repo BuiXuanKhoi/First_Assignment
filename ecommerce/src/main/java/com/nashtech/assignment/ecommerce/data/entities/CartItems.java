@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "cart_detail")
@@ -25,14 +26,17 @@ public class CartItems {
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
+	@NonNull
 	private Products product;
 	
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
+	@NonNull
 	private Cart cart;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
+	@NonNull
 	private Customers customers;
 	
 	

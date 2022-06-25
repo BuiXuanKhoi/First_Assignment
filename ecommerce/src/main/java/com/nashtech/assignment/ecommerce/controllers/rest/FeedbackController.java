@@ -19,7 +19,7 @@ public class FeedbackController {
 	private ProductFeedbackService productFeedbackService;
 	
 	@Autowired
-	public FeedbackController(ProductFeedback productFeedback) {
+	public FeedbackController(ProductFeedbackService productFeedbackService) {
 		this.productFeedbackService = productFeedbackService;
 	}
 	

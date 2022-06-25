@@ -17,37 +17,34 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.crypto.Data;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "products")
 public class Products {
 
 
-	public Products() {
-	}
+	public Products() {}
 	
-	@Override
-	public String toString() {
-		return "Products [productId=" + productId + ", productName=" + productName + ", productPrice=" + productPrice
-				+ ", productDescribe=" + productDescribe + ", productQuantity=" + productQuantity
-				+ ", productCatogeryId=" + productCatogery + ", productCreateDay=" + productCreateDay
-				+ ", productUpdateDay=" + productUpdateDay + "]";
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_id")
-	private Integer productId;
+	private int productId;
 	
 	
 	@Column(name = "product_name")
 	private String productName;
 	
 	@Column(name = "product_price")
-	private long productPrice;
+	private int productPrice;
 	
 	@Column(name = "product_describe")
 	private String productDescribe;
@@ -55,13 +52,21 @@ public class Products {
 	@Column(name = "product_quantity")
 	private int productQuantity;
 	
+	@Column(name = "product_create_day")
+	private Date productCreateDay;
 	
+	@Column(name = "product_update_day")
+	private Date productUpdateDay;
+	
+	
+
 	@ManyToOne
 	@JoinColumn(name = "product_catogery_id")
 	private ProductCatogery productCatogery;
 	
 	
 	//---------------------------
+	
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -79,9 +84,6 @@ public class Products {
 	
 
 	
-	@Column(name = "product_create_day")
-	private Date productCreateDay;
-	
 	public List<OrderItem> getOrderItem() {
 		return orderItem;
 	}
@@ -90,27 +92,7 @@ public class Products {
 		this.orderItem = orderItem;
 	}
 
-	public ProductFeedback getProductFeedback() {
-		return productFeedback;
-	}
 
-	public void setProductFeedback(ProductFeedback productFeedback) {
-		this.productFeedback = productFeedback;
-	}
-
-	public List<CartItems> getCartItems() {
-		return cartItems;
-	}
-
-	public void setCartItems(List<CartItems> cartItems) {
-		this.cartItems = cartItems;
-	}
-
-
-	@Column(name = "product_update_day")
-	private Date productUpdateDay;
-	
-	
 
 	public Products(Integer productId) {
 		super();
@@ -133,11 +115,11 @@ public class Products {
 		this.productName = productName;
 	}
 
-	public long getProductPrice() {
+	public Integer getProductPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(long productPrice) {
+	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
 	}
 
@@ -149,7 +131,7 @@ public class Products {
 		this.productDescribe = productDescribe;
 	}
 
-	public int getProductQuantity() {
+	public Integer getProductQuantity() {
 		return productQuantity;
 	}
 
@@ -181,7 +163,7 @@ public class Products {
 		this.productUpdateDay = productUpdateDay;
 	}
 
-	public Products(Integer productId, String productName, long productPrice, String productDescribe,
+	public Products(Integer productId, String productName, int productPrice, String productDescribe,
 			int productQuantity, Date productCreateDay, Date productUpdateDay) {
 		this.productId = productId;
 		this.productName = productName;

@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "cart")
@@ -43,6 +44,7 @@ public class Cart {
 	
 	@OneToOne
 	@JoinColumn(name = "customer_id")
+	@NonNull
 	private Customers customers;
 	
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -50,15 +52,7 @@ public class Cart {
 	
 	
 	
-	
 
-	public List<CartItems> getCartItems() {
-		return cartItems;
-	}
-
-	public void setCartItems(List<CartItems> cartItems) {
-		this.cartItems = cartItems;
-	}
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;

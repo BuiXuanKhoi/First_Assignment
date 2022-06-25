@@ -35,10 +35,10 @@ public class ProductsController
 	}
 	
 	
-	@RequestMapping(value = "/products/{name}", method = RequestMethod.GET )
-	public Products findProductByName(@PathVariable("name") String name) 
+	@RequestMapping(value = "/products/{id}", method = RequestMethod.GET )
+	public Products findProductByName(@PathVariable("id") Integer  id) 
 	{
-		 return this.productService.getProductByName(name);
+		 return this.productService.getProductById(id);
 	}
 	
 	@PostMapping("/products")

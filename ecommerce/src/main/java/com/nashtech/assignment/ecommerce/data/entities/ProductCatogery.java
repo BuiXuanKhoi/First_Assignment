@@ -12,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "product_catogery")
@@ -26,10 +28,11 @@ public class ProductCatogery {
 	private Integer productCatogeryId;
 	
 	@Column(name = "product_catogery_name")
+	@NonNull
 	private String productCatogeryName;
 	
 	@OneToMany(mappedBy = "productCatogery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Products> products = new ArrayList<Products>();
+	private List<Products> products;
 	
 
 	public ProductCatogery(Integer productCatogeryId) {
@@ -37,19 +40,11 @@ public class ProductCatogery {
 		this.productCatogeryId = productCatogeryId;
 	}
 	
+	public ProductCatogery() {
+		
+	}
 	
-
-	public List<Products> getProducts() {
-		return products;
-	}
-
-
-
-	public void setProducts(List<Products> products) {
-		this.products = products;
-	}
-
-
+	
 
 	public Integer getProductCatogeryId() {
 		return productCatogeryId;

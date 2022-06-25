@@ -11,7 +11,7 @@ public interface ProductService {
 	public List<Products> getAllProducts();
 	
 
-	public Products getProductByName(String name);
+	public Products getProductById(int id);
 	
 	public ArrayList<Products> getListOfProductIncreaseInPrice();
 	

@@ -21,6 +21,7 @@ import org.springframework.data.annotation.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "customers")
@@ -36,6 +37,7 @@ public class Customers {
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
+	@NonNull
 	private Users users;
 	
 	
@@ -84,33 +86,6 @@ public class Customers {
 
 	
 
-	public Orders getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Orders orders) {
-		this.orders = orders;
-	}
-
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
-
-	public List<CartItems> getCartItems() {
-		return cartItems;
-	}
-
-	public void setCartItems(List<CartItems> cartItems) {
-		this.cartItems = cartItems;
-	}
-
-
-
-	
 
 	public Date getCustomerDateOfBirth() {
 		return customerDateOfBirth;

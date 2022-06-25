@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 
 @Entity
@@ -27,7 +28,7 @@ public class Users {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private Integer userId;
+	private int userId;
 	
 	public Users() {}
 	
@@ -100,15 +101,18 @@ public class Users {
 	}
 
 	@Column(name = "user_email")
+	@NonNull
 	private String userEmail;
 	
 	@Column(name = "user_name")
 	private String userName;
 	
 	@Column(name = "user_password")
+	@NonNull
 	private String userPassword;
 	
 	@Column(name = "user_create_day")
+	@NonNull
 	private Date userCreateDay;
 	
 	@Column(name = "user_update_day")
@@ -116,6 +120,7 @@ public class Users {
 	
 	@ManyToOne
 	@JoinColumn(name = "catogery_user_id")
+	@NonNull
 	private Roles roles;
 	
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL )
