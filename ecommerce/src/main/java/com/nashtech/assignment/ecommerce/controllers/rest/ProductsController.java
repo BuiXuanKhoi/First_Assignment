@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.service.ProductService;
@@ -35,12 +37,6 @@ public class ProductsController
 	}
 	
 	
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.GET )
-	public Products findProductByName(@PathVariable("id") Integer  id) 
-	{
-		 return this.productService.getProductById(id);
-	}
-	
 	@PostMapping("/products")
 	public Products addNewProduct(@Validated @RequestBody Products products) 
 	{
@@ -54,6 +50,16 @@ public class ProductsController
 		return this.productService.saveProduct(products);
 	}
 	
+	@GetMapping("/products/price/decrease")
+	public List<Products> getListProductsByPriceDecrease(){
+		return this.productService.getProductByPriceDecrease();
+	}
+	
+	@GetMapping("/products/{name}")
+	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name){
+		return this.productService.getListProductByCatogery(name);
+	}
+	
 
 	
 	@GetMapping("/products")
@@ -63,8 +69,8 @@ public class ProductsController
 	}
 	
 	@GetMapping("/products/price/increase")
-	public ArrayList<Products>getListOfProductIncreaseInPrice()
+	public List<Products>getListOfProductIncreaseInPrice()
 	{
-		return this.productService.getListOfProductIncreaseInPrice();
+		return this.productService.getProductByPriceIncrease();
 	}
 }

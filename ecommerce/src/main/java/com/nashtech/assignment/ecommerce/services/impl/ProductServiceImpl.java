@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.service.ProductService;
@@ -34,29 +36,25 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ArrayList<Products> getListOfProductIncreaseInPrice()
+	public List<Products> getProductByPriceIncrease()
 	{
-		int min;
-		ArrayList<Products> listOfProducts = new ArrayList<>(this.productRepository.findAll());
-		int sizeOfList = listOfProducts.size();
-		for(int i =0; i<sizeOfList;i++)
-		{
-			min = i;
-			for(int j = i +1; j < sizeOfList; j++ ) 
-			{
-				if(listOfProducts.get(min).getProductPrice() > listOfProducts.get(j).getProductPrice())
-				{
-					Collections.swap(listOfProducts, min, j);
-				}
-			}
-		}
-		return listOfProducts;
+		return this.productRepository.getProductByPriceIncrease();
 	}
 
 	@Override
 	public Products saveProduct(Products products) {
 		
 		return this.productRepository.save(products);
+	}
+
+	@Override
+	public List<Products> getProductByPriceDecrease() {
+		return this.productRepository.getProductByPriceDecrease();
+	}
+
+	@Override
+	public List<ProductFeature> getListProductByCatogery(String name) {
+		return this.productRepository.getListProductByCatogery(name);
 	}
 
 

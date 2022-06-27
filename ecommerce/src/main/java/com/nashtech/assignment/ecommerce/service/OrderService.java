@@ -7,5 +7,8 @@ public interface OrderService {
 	public Orders deleteOrders(Orders orders);
 	
 	public Orders createOrders(Orders orders);
+	
+	public Orders updateOrders(Orders orders);
+	
 
 }

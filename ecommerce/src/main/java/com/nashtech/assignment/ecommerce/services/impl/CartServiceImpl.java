@@ -28,7 +28,15 @@ public class CartServiceImpl implements CartService {
 		return this.cartRepository.findAll();
 	}
 	
-	public Cart addNewCart(Cart cart) {
+	
+
+	@Override
+	public Cart findCartByCustomerId(int id) {
+		return this.cartRepository.findCartByCustomerId(id);
+	}
+
+	@Override
+	public Cart createCart(Cart cart) {
 		return this.cartRepository.save(cart);
 	}
 

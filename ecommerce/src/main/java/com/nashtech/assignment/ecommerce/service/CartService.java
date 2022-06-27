@@ -10,6 +10,8 @@ public interface CartService {
 	
 	public List<Cart> getListCarts();
 	
-	public Cart addNewCart(Cart cart);
+	public Cart createCart(Cart cart);
+	
+	public Cart findCartByCustomerId(int id);
 
 }

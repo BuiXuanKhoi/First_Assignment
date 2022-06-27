@@ -1,4 +1,4 @@
-package com.nashtech.assignment.ecommerce.services.impl;
+	package com.nashtech.assignment.ecommerce.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +29,13 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Orders createOrders(Orders orders) {
+		return this.orderRepository.save(orders);
+	}
+
+
+
+	@Override
+	public Orders updateOrders(Orders orders) {
 		return this.orderRepository.save(orders);
 	}
 
