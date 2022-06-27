@@ -1,6 +1,9 @@
 package com.nashtech.assignment.ecommerce.controllers.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +35,11 @@ public class CustomerController {
 	@PutMapping("/customers")
 	public Customers editCustomerInfo(@RequestBody Customers customers) {
 		return this.customerService.editCustomerInfo(customers);
+	}
+	
+	@GetMapping("/customers")
+	public List<Customers> getListCustomers(){
+		return this.customerService.getListCustomers();
 	}
 	
 	

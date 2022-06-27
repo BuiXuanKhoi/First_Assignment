@@ -38,8 +38,8 @@ public class OrderItemServiceImpl implements OrderItemService{
 	}
 
 	@Override
-	public OrderItem uploadOrderItem(int id, OrderItem orderItem) {
-		return this.orderItemRepository.updateOrderItem(id, orderItem);
+	public OrderItem uploadOrderItem(OrderItem orderItem) {
+		return this.orderItemRepository.save(orderItem);
 	}
 
 	@Override

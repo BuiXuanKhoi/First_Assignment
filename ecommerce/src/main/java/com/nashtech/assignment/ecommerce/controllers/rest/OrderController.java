@@ -30,7 +30,7 @@ public class OrderController {
 		return this.orderService.createOrders(orders);
 	}
 	
-	@PutMapping("")
+	@PutMapping("/details")
 	public Orders updateOrder(@RequestBody Orders orders) {
 		return this.orderService.updateOrders(orders);
 	}

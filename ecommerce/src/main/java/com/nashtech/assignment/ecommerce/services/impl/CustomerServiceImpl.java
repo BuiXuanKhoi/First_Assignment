@@ -1,5 +1,7 @@
 package com.nashtech.assignment.ecommerce.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customers editCustomerInfo(Customers customers) {
 		return this.customerRepository.save(customers);
+	}
+
+	@Override
+	public List<Customers> getListCustomers() {
+		return this.customerRepository.findAll();
 	}
 	
 	

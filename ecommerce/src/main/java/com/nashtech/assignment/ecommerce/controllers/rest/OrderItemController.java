@@ -27,11 +27,6 @@ public class OrderItemController {
 	}
 
 
-
-	@PutMapping(value = "/{id}")
-	public OrderItem updateOrderItem(@PathVariable("id") int id, @RequestBody OrderItem orderItem) {
-		return this.orderItemService.uploadOrderItem(id, orderItem);
-	}
 	
 	
 

@@ -103,11 +103,11 @@ public class Customers {
 		this.customerAddress = customerAddress;
 	}
 
-	public long getCustomerPhoneNumber() {
+	public Long getCustomerPhoneNumber() {
 		return customerPhoneNumber;
 	}
 
-	public void setCustomerPhoneNumber(long customerPhoneNumber) {
+	public void setCustomerPhoneNumber(Long customerPhoneNumber) {
 		this.customerPhoneNumber = customerPhoneNumber;
 	}
 
@@ -122,7 +122,7 @@ public class Customers {
 	private  String customerAddress;
 	
 	@Column(name = "customer_phone_numer")
-	private long customerPhoneNumber;
+	private Long customerPhoneNumber;
 
 	
 	

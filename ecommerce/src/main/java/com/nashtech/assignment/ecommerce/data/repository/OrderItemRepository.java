@@ -10,11 +10,10 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	
 	@Query(value = "select * from order_detail o "
 			+ "inner join products p on o.product_id = p.product_id "
-			+ "where p.product_name = :name")
+			+ "where p.product_name = :name", nativeQuery = true)
 	public OrderItem getOrderItemByProductName(String name);
 	
 	
-	@Query(value = "update order_detail set order_detail = :orderItem where order_detail.product_id = :id")
-	public OrderItem updateOrderItem(int id, OrderItem orderItem);
+
 
 }

@@ -15,11 +15,9 @@ public interface CartItemRepository extends JpaRepository<CartItems, Integer> {
 	
 	List<CartItems> findByCustomers(Customers customers);
 	
-	CartItems findByCustomerAndProduct(int customer_id, int product_id);
-	
 	@Query(value = "select * from cart_detail c "
-			+ "inner join products p on c.product_id = p.product_id  ")
-	CartItems findByCustomerAndProductName(int customer_id, String product_name);
+			+ "inner join products p on c.product_id = p.product_id  ", nativeQuery = true)
+	CartItems findByCartAndProductName(int cart_id, String product_name);
 	
 
 }

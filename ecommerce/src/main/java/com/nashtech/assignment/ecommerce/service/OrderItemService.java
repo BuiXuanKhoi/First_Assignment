@@ -12,7 +12,7 @@ public interface OrderItemService {
 	
 	public OrderItem addNewOrderItem(OrderItem orderItem);
 	
-	public OrderItem uploadOrderItem(int id, OrderItem orderItem);
+	public OrderItem uploadOrderItem(OrderItem orderItem);
 	
 	public void deleteOrderItem(OrderItem orderItem);
 
