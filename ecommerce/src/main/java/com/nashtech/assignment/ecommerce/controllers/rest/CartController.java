@@ -18,7 +18,7 @@ import com.nashtech.assignment.ecommerce.service.CartService;
 import com.nashtech.assignment.ecommerce.services.impl.CartItemServiceImpl;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/carts")
 public class CartController {
 	
 	private CartService cartService;
@@ -32,39 +32,33 @@ public class CartController {
 	}
 	
 	
-	@GetMapping("/carts")
+	@GetMapping
 	public List<Cart> getListCarts()
 	{
 		return this.cartService.getListCarts();
 	}
 	
-	@PutMapping( value = "/carts/{cart_id}/{cart_item_id}")
-	public CartItems updateCartItems(@PathVariable("cart_id") int cartId, @PathVariable("cart_item_id") int cartItemId, @RequestBody CartItems cartItems) {
-		Cart cart = new Cart();
-		cart.setCartId(cartId);
-		cartItems.setCart(cart);
-		return this.carItemService.updateCartItem(cartItems);
-	}
 	
-	@PostMapping(value = "/carts/new")
+	@PostMapping(value = "/details")
 	public CartItems addNewCartItem(@RequestBody CartItems cartItems) {
 		cartItems.setCartItemId(0);
 		return this.carItemService.addCartItem(cartItems);
 	}
 	
-	@PostMapping("/carts")
+	@PostMapping
 	public Cart createNewCart( @RequestBody Cart cart) 
 	{
 		cart.setCartId(0);
 		return this.cartService.createCart(cart);
 	}
 	
-	@GetMapping("/carts/{user_id}")
+	@GetMapping("/{user_id}")
 	public Cart findCartByCustomerId(@PathVariable("user_id") int id) {
+		
 		return this.cartService.findCartByCustomerId(id);
 	}
 	
-	@PutMapping("/carts")
+	@PutMapping
 	public Cart updateCart(@RequestBody Cart cart) {
 		return this.cartService.updateCartQuantity(cart);
 	}

@@ -1,6 +1,7 @@
 package com.nashtech.assignment.ecommerce.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public interface UserService {
 	public Users updateUsers(Users users);
 	
 	public void deleteUserById(int id);
+	
+	public Optional<Users> findUserById(int id);
 	
 
 	

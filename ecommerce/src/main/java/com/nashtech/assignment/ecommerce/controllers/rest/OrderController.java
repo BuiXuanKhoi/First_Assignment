@@ -25,7 +25,7 @@ public class OrderController {
 	}
 
 
-	@PostMapping("")
+	@PostMapping
 	public Orders createOrder(@RequestBody Orders orders) {
 		return this.orderService.createOrders(orders);
 	}

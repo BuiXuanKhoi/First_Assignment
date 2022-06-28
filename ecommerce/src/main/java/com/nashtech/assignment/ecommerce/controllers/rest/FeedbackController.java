@@ -23,12 +23,12 @@ public class FeedbackController {
 		this.productFeedbackService = productFeedbackService;
 	}
 	
-	@GetMapping(value = "")
+	@GetMapping
 	public List<ProductFeedback> getFeedbackList() {
 		return this.productFeedbackService.getFeedbackList();
 	}
 	
-	@PostMapping(value = "")
+	@PostMapping
 	public ProductFeedback addFeedback(@RequestBody ProductFeedback productFeedback) {
 		return this.productFeedbackService.saveFeedback(productFeedback);
 	};

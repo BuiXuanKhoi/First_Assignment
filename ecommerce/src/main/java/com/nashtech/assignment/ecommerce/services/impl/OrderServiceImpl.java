@@ -19,9 +19,9 @@ public class OrderServiceImpl implements OrderService {
 
 
 	
-	public Orders deleteOrders(Orders orders) 
+	public void deleteOrders(Orders orders) 
 	{
-		return orders;
+		this.orderRepository.delete(orders);
 		
 	}
 

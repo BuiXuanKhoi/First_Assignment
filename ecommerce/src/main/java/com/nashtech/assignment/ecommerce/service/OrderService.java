@@ -4,7 +4,7 @@ import com.nashtech.assignment.ecommerce.data.entities.Orders;
 
 public interface OrderService {
 	
-	public Orders deleteOrders(Orders orders);
+	public void deleteOrders(Orders orders);
 	
 	public Orders createOrders(Orders orders);
 	

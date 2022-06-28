@@ -1,6 +1,7 @@
 package com.nashtech.assignment.ecommerce.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,11 @@ public class UserServiceImpl implements UserService {
 	public void deleteUserById(int id) 
 	{
 		this.userRepository.deleteById(id);
+	}
+
+	@Override
+	public Optional<Users> findUserById(int id) {
+		return this.userRepository.findById(id);
 	}
 	
 	
