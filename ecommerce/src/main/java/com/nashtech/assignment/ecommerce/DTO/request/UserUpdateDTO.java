@@ -10,7 +10,6 @@ public class UserUpdateDTO {
 	@NotBlank(message = "email cannot blank")
 	private String email;
 	
-	@NotBlank(message = "password cannot null")
 	@Min(value = 8, message = "Password at least has 8 characters")
 	private String password;
 	

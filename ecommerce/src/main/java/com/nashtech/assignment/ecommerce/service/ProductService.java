@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.hibernate.annotations.Any;
 import org.springframework.data.jpa.repository.Query;
 
+import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
@@ -24,8 +26,10 @@ public interface ProductService {
 	
 	public List<Products> getProductByPriceDecrease();
 	
+	public ProductRespondDTO addNewProduct(ProductRequestDTO productRequest);
 	
-	public List<Optional<ProductFeature>> getListProductByCatogery(String name);
+	
+	public List<ProductFeature> getListProductByCatogery(String name);
 	
 
 	

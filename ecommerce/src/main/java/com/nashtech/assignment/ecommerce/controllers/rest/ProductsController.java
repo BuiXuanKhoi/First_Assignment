@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
@@ -41,10 +45,8 @@ public class ProductsController
 	
 	
 	@PostMapping
-	public Products addNewProduct(@Validated @RequestBody Products products) 
-	{
-		products.setProductId(0);
-		return this.productService.saveProduct(products);
+	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) {
+		return this.productService.addNewProduct(productRequest);
 	}
 	
 	@PutMapping
@@ -58,12 +60,11 @@ public class ProductsController
 		return this.productService.getProductByPriceDecrease();
 	}
 	
-	/*@GetMapping("/{name}")
-	public List<Optional<ProductFeature>> getListProductByCategory(@PathVariable("name") String name){
-		List<Optional<ProductFeature>> list =  this.productService.getListProductByCatogery(name);
-		
+	@GetMapping("/{name}")
+	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name){
+		List<ProductFeature> list =  this.productService.getListProductByCatogery(name);
 		return list;
-	}*/
+	}
 	
 	
 	@GetMapping

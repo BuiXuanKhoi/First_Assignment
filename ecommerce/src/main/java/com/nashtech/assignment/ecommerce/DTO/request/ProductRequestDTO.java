@@ -1,17 +1,25 @@
 package com.nashtech.assignment.ecommerce.DTO.request;
 
+import java.time.Instant;
+import java.util.Date;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-import com.nashtech.assignment.ecommerce.data.entities.Customers;
+import org.springframework.data.annotation.CreatedDate;
+
+import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductUpdateDTO {
+@AllArgsConstructor
+public class ProductRequestDTO {
+	
 	
 	@NotEmpty(message = "Product has to have a name")
 	private String productName;
@@ -22,7 +30,21 @@ public class ProductUpdateDTO {
 	@Min(value = 1,message = "Please enter the quantity of products")
 	private int productQuantity;
 	
+	private ProductCatogery productCatogery;
 	
+	
+	
+	
+	
+
+
+	public ProductCatogery getProductCatogery() {
+		return productCatogery;
+	}
+
+	public void setProductCatogery(ProductCatogery productCatogery) {
+		this.productCatogery = productCatogery;
+	}
 
 	public String getProductName() {
 		return productName;
@@ -47,8 +69,5 @@ public class ProductUpdateDTO {
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
-	
-	
-	
 
 }

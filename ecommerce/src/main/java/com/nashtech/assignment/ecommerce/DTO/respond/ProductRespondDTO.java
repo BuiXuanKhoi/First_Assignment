@@ -1,13 +1,13 @@
 package com.nashtech.assignment.ecommerce.DTO.respond;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.nashtech.assignment.ecommerce.DTO.request.ProductCatogeryRespondDTO;
+import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +30,7 @@ public class ProductRespondDTO {
 	private int productQuantity;
 	private Date productCreateDay;
 	private Date productUpdateDay;
-	
-	
-	
+	private ProductCatogery productCatogery;
 	
 	
 	
@@ -79,7 +77,16 @@ public class ProductRespondDTO {
 	}
 	public void setProductUpdateDay(Date productUpdateDay) {
 		this.productUpdateDay = productUpdateDay;
+	} 
+	
+
+	public ProductCatogery getProductCatogery() {
+		return productCatogery;
+	}
+	public void setProductCatogery(ProductCatogery productCatogery) {
+		this.productCatogery = productCatogery;
 	}
 	
+
 	
 }

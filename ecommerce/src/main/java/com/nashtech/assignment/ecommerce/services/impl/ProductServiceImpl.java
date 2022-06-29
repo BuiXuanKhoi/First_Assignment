@@ -3,6 +3,7 @@ package com.nashtech.assignment.ecommerce.services.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
@@ -33,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
 		this.productRepository = productRepository;
 		this.modelMapper = modelMapper;
 	}
+	
 
 	@Override
 	public List<ProductRespondDTO> getAllProducts()
@@ -42,15 +46,36 @@ public class ProductServiceImpl implements ProductService {
 		list.forEach(product -> listDTO.add(modelMapper.map(product, ProductRespondDTO.class)));
 		return listDTO;
 	}
+	
+	@Override
+	public List<ProductFeature> getListProductByCatogery(String name) 
+	{
+		
+		List<Optional<ProductFeature>> list = this.productRepository.getListProductByCatogery(name);
+		List<ProductFeature> listFeatures = new ArrayList<ProductFeature>();
+		
+		if(!list.isEmpty())
+		{	
+			for(int i =0; i < list.size();i++)
+			{
+				listFeatures.add(list.get(i).get());
+			}
+			
+			return listFeatures;
+		}
+		throw new ResourceNotFoundException("Cannot found any products belong to list " + name);
+	}
+	
+	
 
 	@Override
 	public ProductRespondDTO getProductById(int id)
 	{
 		Optional<Products> productOptional = this.productRepository.findById(id);
 		
-		if(productOptional.isPresent()) {
+		if(productOptional.isPresent()) 
+		{
 			Products products = productOptional.get();
-			ProductRespondDTO productRespondDTO = new ProductRespondDTO();
 			return modelMapper.map(products, ProductRespondDTO.class);
 		}
 		
@@ -77,16 +102,16 @@ public class ProductServiceImpl implements ProductService {
 		return this.productRepository.getProductByPriceDecrease();
 	}
 
+
 	@Override
-	public List<Optional<ProductFeature>> getListProductByCatogery(String name) {
-		
-		List<Optional<ProductFeature>> list = this.getListProductByCatogery(name);
-		
-		if(list.isEmpty()) {
-			throw new ResourceNotFoundException("Cannot found any products belong to list " + name);
-		}
-		return list;
+	public ProductRespondDTO addNewProduct(ProductRequestDTO productRequest) {
+		Products products = modelMapper.map(productRequest, Products.class);
+		Products savedProducts = this.productRepository.save(products);
+				
+		return modelMapper.map(savedProducts, ProductRespondDTO.class);
 	}
+
+
 	
 
 

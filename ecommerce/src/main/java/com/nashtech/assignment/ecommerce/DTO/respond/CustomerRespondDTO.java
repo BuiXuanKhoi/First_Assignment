@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerRespondDTO {
@@ -27,5 +27,40 @@ public class CustomerRespondDTO {
 	private String customerPhoneNumber;
 	
 	private int userId;
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
+
+	public Date getCustomerDateOfBirth() {
+		return customerDateOfBirth;
+	}
+
+	public void setCustomerDateOfBirth(Date customerDateOfBirth) {
+		this.customerDateOfBirth = customerDateOfBirth;
+	}
+
+	public String getCustomerPhoneNumber() {
+		return customerPhoneNumber;
+	}
+
+	public void setCustomerPhoneNumber(String customerPhoneNumber) {
+		this.customerPhoneNumber = customerPhoneNumber;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	
+	
 
 }

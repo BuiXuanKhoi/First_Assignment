@@ -1,6 +1,8 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,11 +17,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.print.attribute.standard.DateTimeAtCreation;
 import javax.xml.crypto.Data;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -52,15 +60,18 @@ public class Products {
 	@Column(name = "product_quantity")
 	private int productQuantity;
 	
+	
+
+	@Temporal(TemporalType.DATE)
 	@Column(name = "product_create_day")
-	private Date productCreateDay;
+	private Date productCreateDay ;
 	
 	@Column(name = "product_update_day")
 	private Date productUpdateDay;
 	
 	
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_catogery_id")
 	private ProductCatogery productCatogery;
 	
@@ -68,7 +79,7 @@ public class Products {
 	//---------------------------
 	
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> orderItem ;
 	
