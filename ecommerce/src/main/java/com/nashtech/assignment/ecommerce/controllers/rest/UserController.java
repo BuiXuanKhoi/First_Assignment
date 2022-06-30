@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.service.UserService;
@@ -45,11 +47,11 @@ public class UserController {
 	
 	
 	
-	@RequestMapping( method = RequestMethod.POST)
-	public Users addNewUser(@Validated @RequestBody Users users)
+	@PostMapping
+	public UserRespondDTO addNewUser(@Validated @RequestBody UserRequestDTO userRequestDTO)
 	{
-			users.setUserId(0);
-			return this.userService.addNewUser(users);	
+			userRequestDTO.setUserId(0);
+			return this.userService.addNewUser(userRequestDTO);	
 	}
 	
 	@PutMapping

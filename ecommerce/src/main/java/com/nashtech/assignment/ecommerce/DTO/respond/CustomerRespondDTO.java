@@ -4,6 +4,7 @@ import java.security.KeyStore.PrivateKeyEntry;
 import java.sql.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,8 +27,12 @@ public class CustomerRespondDTO {
 	@JsonProperty("Phone Number")
 	private String customerPhoneNumber;
 	
-	private int userId;
+	private Users userId;
 
+	
+	
+	//-------------------------------------------------Getter & Setter------------------------------------
+	
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -52,11 +57,14 @@ public class CustomerRespondDTO {
 		this.customerPhoneNumber = customerPhoneNumber;
 	}
 
+
+	// Expose only user id
+	@JsonProperty("User ID")
 	public int getUserId() {
-		return userId;
+		return userId.getUserId();
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Users userId) {
 		this.userId = userId;
 	}
 	

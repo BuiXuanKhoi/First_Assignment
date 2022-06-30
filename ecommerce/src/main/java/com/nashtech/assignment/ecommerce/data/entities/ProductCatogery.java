@@ -1,5 +1,6 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import lombok.NonNull;
 @Entity
 @Table(name = "product_catogery")
 @NoArgsConstructor
-public class ProductCatogery {
+public class ProductCatogery implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +62,9 @@ public class ProductCatogery {
 	public void setProductCatogeryName(String productCatogeryName) {
 		this.productCatogeryName = productCatogeryName;
 	}
+
+	
+	
 	
 	
 

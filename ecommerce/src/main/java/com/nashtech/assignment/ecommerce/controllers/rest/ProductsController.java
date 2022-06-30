@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
-import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
@@ -50,14 +49,14 @@ public class ProductsController
 	}
 	
 	@PutMapping
-	public Products updateProducts(@Validated @RequestBody Products products)
+	public ProductRespondDTO updateProducts(@Validated @RequestBody ProductRequestDTO productRequestDTO)
 	{
-		return this.productService.saveProduct(products);
+		return this.productService.saveProduct(productRequestDTO);
 	}
 	
-	@GetMapping("/price/decrease")
-	public List<Products> getListProductsByPriceDecrease(){
-		return this.productService.getProductByPriceDecrease();
+	@GetMapping("/{name}/decrease")
+	public List<ProductFeature> getListProductsByPriceDecrease(@PathVariable("name") String catogeryName){
+		return this.productService.getProductByPriceDecrease(catogeryName);
 	}
 	
 	@GetMapping("/{name}")
@@ -73,9 +72,9 @@ public class ProductsController
 		return this.productService.getAllProducts();
 	}
 	
-	@GetMapping("/price/increase")
-	public List<ProductRespondDTO>getListOfProductIncreaseInPrice()
+	@GetMapping("/{name}/increase")
+	public List<ProductFeature>getListOfProductIncreaseInPrice(@PathVariable("name") String catogeryName)
 	{
-		return this.productService.getProductByPriceIncrease();
+		return this.productService.getProductByPriceIncrease(catogeryName);
 	}
 }

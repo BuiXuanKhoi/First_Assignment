@@ -1,5 +1,6 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,13 +32,21 @@ import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "products")
-public class Products {
+public class Products implements Serializable {
 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public Products() {}
 	
@@ -105,10 +114,7 @@ public class Products {
 
 
 
-	public Products(Integer productId) {
-		super();
-		this.productId = productId;
-	}
+
 
 	public Integer getProductId() {
 		return productId;
@@ -153,6 +159,7 @@ public class Products {
 	public ProductCatogery getProductCatogery() {
 		return productCatogery;
 	}
+	
 
 	public void setProductCatogery(ProductCatogery productCatogery) {
 		this.productCatogery = productCatogery;

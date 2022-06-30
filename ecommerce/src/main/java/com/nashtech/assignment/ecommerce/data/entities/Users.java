@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -43,6 +45,22 @@ public class Users {
 		this.roles = catogeryUserId;
 	}
 	
+
+	public Date getUserCreateDay() {
+		return userCreateDay;
+	}
+
+	public void setUserCreateDay(Date userCreateDay) {
+		this.userCreateDay = userCreateDay;
+	}
+
+	public Roles getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Roles roles) {
+		this.roles = roles;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -92,8 +110,8 @@ public class Users {
 		this.userUpDateDay = userUpDate;
 	}
 
-	public Roles getCatogeryUserId() {
-		return roles;
+	public int getCatogeryUserId() {
+		return roles.getCatogeryUserId();
 	}
 
 	public void setCatogeryUserId(Roles catogeryUserId) {

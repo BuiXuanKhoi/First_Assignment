@@ -1,5 +1,6 @@
 package com.nashtech.assignment.ecommerce.services.impl;
 
+import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
-import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
@@ -42,9 +42,14 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductRespondDTO> getAllProducts()
 	{
 		List<Products> list = this.productRepository.findAll();
-		List<ProductRespondDTO> listDTO = new ArrayList<ProductRespondDTO>();
-		list.forEach(product -> listDTO.add(modelMapper.map(product, ProductRespondDTO.class)));
-		return listDTO;
+		if(!list.isEmpty()) 
+		{
+			List<ProductRespondDTO> listDTO = new ArrayList<ProductRespondDTO>();
+			list.forEach(product -> listDTO.add(modelMapper.map(product, ProductRespondDTO.class)));
+			return listDTO;
+		}
+		
+		throw new ResourceNotFoundException("Cannot find any products in storage");
 	}
 	
 	@Override
@@ -83,23 +88,24 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductRespondDTO> getProductByPriceIncrease()
+	public List<ProductFeature> getProductByPriceIncrease(String catogeryName)
 	{
-		List<Products> listOfProducts =  this.productRepository.getProductByPriceIncrease();
-		List<ProductRespondDTO> listOfProductsDTO = new ArrayList<ProductRespondDTO>();
-		listOfProducts.forEach(products -> listOfProductsDTO.add(modelMapper.map(products, ProductRespondDTO.class)));
-		return listOfProductsDTO;
+		List<ProductFeature> listOfProducts =  this.productRepository.getProductByPriceIncrease(catogeryName);
+
+		return listOfProducts;
 	}
 
 	@Override
-	public Products saveProduct(Products products) {
+	public ProductRespondDTO saveProduct(ProductRequestDTO productRequestDTO) {
+		Products products = modelMapper.map(productRequestDTO, Products.class);
+		this.productRepository.save(products);
 		
-		return this.productRepository.save(products);
+		return modelMapper.map(products, ProductRespondDTO.class);
 	}
 
 	@Override
-	public List<Products> getProductByPriceDecrease() {
-		return this.productRepository.getProductByPriceDecrease();
+	public List<ProductFeature> getProductByPriceDecrease(String catogeryName) {
+		return this.productRepository.getProductByPriceDecrease(catogeryName);
 	}
 
 

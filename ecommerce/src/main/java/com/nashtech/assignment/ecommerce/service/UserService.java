@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 
@@ -14,7 +16,7 @@ public interface UserService {
 	
 	public Users findUserByName(String userName);
 	
-	public Users addNewUser(Users users);
+	public UserRespondDTO addNewUser(UserRequestDTO userRequestDTO);
 	
 	public Users updateUsers(Users users);
 	

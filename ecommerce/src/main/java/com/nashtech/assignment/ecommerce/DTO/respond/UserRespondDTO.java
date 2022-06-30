@@ -2,6 +2,10 @@ package com.nashtech.assignment.ecommerce.DTO.respond;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nashtech.assignment.ecommerce.data.entities.Roles;
+
 public class UserRespondDTO {
 	
 	
@@ -10,6 +14,8 @@ public class UserRespondDTO {
 	private String userEmail;
 	
 	private Date userCreateDay;
+	
+	private Roles roles;
 
 
 	public String getUserName() {
@@ -36,6 +42,22 @@ public class UserRespondDTO {
 	public void setUserCreateDay(Date userCreateDay) {
 		this.userCreateDay = userCreateDay;
 	}
+
+	@JsonIgnore
+	public Roles getRoles() {
+		return roles;
+	}
+	
+	@JsonProperty("Role")
+	public String getRoleId() {
+		return roles.getRoleName();
+	}
+
+	public void setRoles(Roles roles) {
+		this.roles = roles;
+	}
+	
+	
 	
 	
 

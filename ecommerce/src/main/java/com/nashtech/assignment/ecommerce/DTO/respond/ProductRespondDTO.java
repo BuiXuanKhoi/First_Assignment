@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +38,8 @@ public class ProductRespondDTO {
 	
 
 	//-----------------------------Getter and Setter---------------------------
+	
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -77,16 +81,28 @@ public class ProductRespondDTO {
 	}
 	public void setProductUpdateDay(Date productUpdateDay) {
 		this.productUpdateDay = productUpdateDay;
-	} 
+	}
 	
-
+	@JsonIgnore // Prevent expose all category field
 	public ProductCatogery getProductCatogery() {
 		return productCatogery;
+	}
+	
+	
+	// Expose only category id
+	@JsonProperty("Catogery ID")
+	public int getProductCatogeryId() {
+		return productCatogery.getProductCatogeryId();
 	}
 	public void setProductCatogery(ProductCatogery productCatogery) {
 		this.productCatogery = productCatogery;
 	}
 	
+	
+	
+	
+	
+
 
 	
 }

@@ -3,9 +3,12 @@ package com.nashtech.assignment.ecommerce.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
 import com.nashtech.assignment.ecommerce.service.UserService;
@@ -16,9 +19,13 @@ public class UserServiceImpl implements UserService {
 	
 	private UserRepository userRepository;
 	
-	public UserServiceImpl(@Autowired UserRepository userRepository) 
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	public UserServiceImpl( UserRepository userRepository, ModelMapper modelMapper) 
 	{
 		this.userRepository = userRepository;
+		this.modelMapper = modelMapper;
 	}
 
 	@Override
@@ -28,8 +35,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Users addNewUser(Users users) {
-		return this.userRepository.saveAndFlush(users);
+	public UserRespondDTO addNewUser(UserRequestDTO userRequestDTO) {
+		Users users = modelMapper.map(userRequestDTO, Users.class);
+		Users savedUser = this.userRepository.save(users);
+		return modelMapper.map(savedUser, UserRespondDTO.class);
 	}
 
 	@Override

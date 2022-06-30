@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.NoArgsConstructor;
 
@@ -31,9 +32,11 @@ public class Roles {
 	
 	
 	@Column(name = "catogery_user_role")
+	@NotNull
 	private String roleName;
 	
 	@Column(name = "catogery_user_id")
+	@NotNull
 	private int catogeryUserId;
 	
 	
