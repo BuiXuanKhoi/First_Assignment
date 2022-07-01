@@ -1,5 +1,6 @@
 package com.nashtech.assignment.ecommerce.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
+import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.service.UserService;
 
 
@@ -29,9 +31,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Users> getAllUsers() 
+	public List<UserRespondDTO> getAllUsers() 
 	{
-		return this.userRepository.findAll();
+		List<Users> userList =  this.userRepository.findAll();
+		
+		if(userList.isEmpty()) {
+			throw new ResourceNotFoundException("Dont have any user yet");
+		}
+		
+		List<UserRespondDTO> listUserRespond = new ArrayList<UserRespondDTO>();
+		
+		userList.forEach(user-> listUserRespond.add(modelMapper.map(user, UserRespondDTO.class)) );
+		return listUserRespond;
 	}
 
 	@Override

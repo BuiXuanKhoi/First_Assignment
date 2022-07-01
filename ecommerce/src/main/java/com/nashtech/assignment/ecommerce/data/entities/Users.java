@@ -45,6 +45,15 @@ public class Users {
 		this.roles = catogeryUserId;
 	}
 	
+	
+	
+
+	public Users(@NonNull String userEmail, String userName, @NonNull String userPassword) {
+		super();
+		this.userEmail = userEmail;
+		this.userName = userName;
+		this.userPassword = userPassword;
+	}
 
 	public Date getUserCreateDay() {
 		return userCreateDay;

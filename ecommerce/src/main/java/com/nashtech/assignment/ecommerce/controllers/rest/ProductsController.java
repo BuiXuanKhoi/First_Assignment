@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,7 @@ public class ProductsController
 	
 	
 	@PostMapping
+	@PreAuthorize("hasRole('User')")
 	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) {
 		return this.productService.addNewProduct(productRequest);
 	}
@@ -55,6 +57,7 @@ public class ProductsController
 	}
 	
 	@GetMapping("/{name}/decrease")
+	@PreAuthorize("hasRole('User') or hasRole('Admin')")
 	public List<ProductFeature> getListProductsByPriceDecrease(@PathVariable("name") String catogeryName){
 		return this.productService.getProductByPriceDecrease(catogeryName);
 	}

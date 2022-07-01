@@ -3,10 +3,10 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Consumer;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,8 @@ public class UserController {
 	}
 	
 	@GetMapping
-	public List<Users> getAllUsers()
+	@PreAuthorize("hasRole('Admin')")
+	public List<UserRespondDTO> getAllUsers()
 	{
 		return this.userService.getAllUsers();
 	}

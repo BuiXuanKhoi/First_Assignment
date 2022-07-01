@@ -28,7 +28,6 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class Customers {
 	
-	public Customers() {}
 	
 	@Id
 	@GeneratedValue
@@ -122,8 +121,21 @@ public class Customers {
 	private  String customerAddress;
 	
 	@Column(name = "customer_phone_numer")
-	private Long customerPhoneNumber;
+	private long customerPhoneNumber;
 
+
+
+
+
+	public Customers(@NonNull Users users, Date customerDateOfBirth, String customerAddress, Long customerPhoneNumber) {
+		this.users = users;
+		this.customerDateOfBirth = customerDateOfBirth;
+		this.customerAddress = customerAddress;
+		this.customerPhoneNumber = customerPhoneNumber;
+	}
+
+	
+	
 	
 	
 

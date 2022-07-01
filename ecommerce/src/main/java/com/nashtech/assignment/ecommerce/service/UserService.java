@@ -12,7 +12,7 @@ import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 public interface UserService {
 	
-	public List<Users> getAllUsers();
+	public List<UserRespondDTO> getAllUsers();
 	
 	public Users findUserByName(String userName);
 	
