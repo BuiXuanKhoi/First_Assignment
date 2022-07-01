@@ -26,9 +26,9 @@ import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailServiceI
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
-	public UserDetailServiceImpl userDetailServiceImpl;
+	private final UserDetailServiceImpl userDetailServiceImpl;
 	
-	final private JwtAuthEntryPoint unauthorizedHandler;
+	private final JwtAuthEntryPoint unauthorizedHandler;
 	
 	private final JwtUtils jwtUtils;
 	
@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
     		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
     		.authorizeRequests()
-    			.antMatchers("/products/**").permitAll()
+    			.antMatchers("/products/**", "/feedbacks/**", "/orders/**","/api/auth/**").permitAll()
     			.anyRequest().authenticated();
     	
     	http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

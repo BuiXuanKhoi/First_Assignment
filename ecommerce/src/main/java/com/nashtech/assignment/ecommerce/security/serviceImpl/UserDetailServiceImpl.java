@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
 import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 
+@Service
 public class UserDetailServiceImpl implements UserDetailsService {
 	
 	private UserRepository userRepository;

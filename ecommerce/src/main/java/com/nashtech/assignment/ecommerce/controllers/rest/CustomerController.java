@@ -3,6 +3,7 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,11 +28,6 @@ public class CustomerController {
 	}
 	
 	
-	@PostMapping
-	public Customers registerCustomer(@RequestBody Customers customers) {
-		customers.setCustomerId(0);
-		return this.customerService.registerNewCustomers(customers);
-	}
 	
 	@PutMapping
 	public Customers editCustomerInfo(@RequestBody Customers customers) {
@@ -39,6 +35,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("hasRole('Admin')")
 	public List<Customers> getListCustomers(){
 		return this.customerService.getListCustomers();
 	}

@@ -30,7 +30,6 @@ public class FeedbackController {
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasRole('User')")
 	public ProductFeedback addFeedback(@RequestBody ProductFeedback productFeedback) {
 		return this.productFeedbackService.saveFeedback(productFeedback);
 	};

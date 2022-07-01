@@ -51,14 +51,13 @@ public class AuthController {
 	
 	private final CustomerRepository customerRepository;
 	
-	@Autowired
 	private final CustomerService customerService;
 	
-	@Autowired
 	private final PasswordEncoder passwordEncoder;
 	
 	private final JwtUtils jwtUtils;
 
+	@Autowired
 	public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
 			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, CustomerRepository customerRepository, CustomerService customerService) {
 		this.authenticationManager = authenticationManager;
@@ -119,20 +118,30 @@ public class AuthController {
 	
 	
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
-		if(userRepository.isUsernameExisted(signupRequest.getUserName())) 
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest)
+	{
+		
+		try
+		{
+		
+		Optional<Users> userByEmail = userRepository.findByEmail(signupRequest.getUserEmail());
+		Optional<Users> userByName = userRepository.findByUserName(signupRequest.getUserName());
+		
+		if(userByName.isPresent()) 
 		{
 			return ResponseEntity.badRequest().body(new MessageRespond("Error : User name has been taken !"));
 		}
 		
-		if(userRepository.isEmailExisted(signupRequest.getUserEmail())) 
+		if(userByEmail.isPresent()) 
 		{
 			return ResponseEntity.badRequest().body(new MessageRespond("Error : Email is already in use ! "));
 		}
 		
+		//Register User
+		
 		Users users = new Users( signupRequest.getUserEmail(),
 								signupRequest.getUserName(), 
-								passwordEncoder.encode(signupRequest.getUserPassword()));
+								passwordEncoder.encode(signupRequest.getUserPassword())); // Because we cannot store password as text in database
 		
 		String roles = signupRequest.getRole();
 		
@@ -142,12 +151,18 @@ public class AuthController {
 		{
 			Roles roleEntity = roleOptional.get();
 			users.setRoles(roleEntity);
+			users.setUserId(0);
 			userRepository.save(users);
 			
 			return ResponseEntity.ok(new MessageRespond("Register Successfulyl !"));
 		}
 		
 		throw new ResourceNotFoundException("Cannot find that Roles");
+		}
+		catch (Exception e) 
+		{
+			return ResponseEntity.badRequest().body((new MessageRespond("Fail Signup :  " + e.getMessage())));
+		}
 		
 	}
 	

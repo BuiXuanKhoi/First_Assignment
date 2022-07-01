@@ -32,24 +32,10 @@ public class Users {
 	@Column(name = "user_id")
 	private int userId;
 	
-	public Users() {}
-	
-	public Users( String userName, String userEmail, String userPassword, Date userCreateDate,
-			Date userUpDate, Roles catogeryUserId) {
-		super();
-		this.userName = userName;
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-		this.userCreateDay = userCreateDate;
-		this.userUpDateDay = userUpDate;
-		this.roles = catogeryUserId;
-	}
-	
-	
-	
 
-	public Users(@NonNull String userEmail, String userName, @NonNull String userPassword) {
-		super();
+
+
+	public Users(@NonNull String userEmail, @NonNull String userName, @NonNull String userPassword) {
 		this.userEmail = userEmail;
 		this.userName = userName;
 		this.userPassword = userPassword;
@@ -132,6 +118,7 @@ public class Users {
 	private String userEmail;
 	
 	@Column(name = "user_name")
+	@NonNull
 	private String userName;
 	
 	@Column(name = "user_password")
@@ -139,7 +126,6 @@ public class Users {
 	private String userPassword;
 	
 	@Column(name = "user_create_day")
-	@NonNull
 	private Date userCreateDay;
 	
 	@Column(name = "user_update_day")
@@ -147,7 +133,6 @@ public class Users {
 	
 	@ManyToOne
 	@JoinColumn(name = "catogery_user_id")
-	@NonNull
 	private Roles roles;
 	
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL )

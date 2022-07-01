@@ -4,7 +4,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.NoArgsConstructor;
 
+
+@NoArgsConstructor
 public class SignupRequest {
 
 	@NotBlank
@@ -12,7 +15,6 @@ public class SignupRequest {
 	private String userName;
 	
 	@NotBlank
-	@Email
 	private String userEmail;
 	
 	private String role;
@@ -61,6 +63,19 @@ public class SignupRequest {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
+
+
+	public SignupRequest(
+			@NotBlank @Size(min = 3, max = 30, message = "Your user name has to have at lease 3 charater and max is 30 characters") String userName,
+			@NotBlank String userEmail, String role,
+			@NotBlank @Size(min = 8, max = 20, message = "Your user name has to have at lease 8 charater and max is 20 characters") String userPassword) {
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.role = role;
+		this.userPassword = userPassword;
+	}
+	
+	
 	
 	
 	
