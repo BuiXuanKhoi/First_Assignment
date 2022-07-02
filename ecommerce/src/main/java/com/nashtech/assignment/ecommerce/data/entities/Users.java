@@ -32,8 +32,14 @@ public class Users {
 	@Column(name = "user_id")
 	private int userId;
 	
+	
+	
 
 
+
+	public Users() {
+		super();
+	}
 
 	public Users(@NonNull String userEmail, @NonNull String userName, @NonNull String userPassword) {
 		this.userEmail = userEmail;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailImpl;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -23,7 +24,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtUtils {
 	
-	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 	
 	private final String jwtSecretKey;
 	
@@ -59,32 +59,30 @@ public class JwtUtils {
 	
 	public boolean validateToken(String authToken) 
 	{
-		try 
-		{
+		try {
 			Jwts.parser().setSigningKey(jwtSecretKey).parseClaimsJws(authToken);
 			return true;
 		} 
 		catch (SignatureException signature) 
 		{
-			logger.error("Invalid JWT Signature :{}", signature.getMessage());
+			throw new UnAuthorizationException("Invalid JWT Signature :" + signature.getMessage());
 		}
 		catch (MalformedJwtException malformException) 
 		{
-			logger.error("Invalid Jwt Token :{}", malformException.getMessage());
+			throw new UnAuthorizationException("Invalid Jwt Token :"+ malformException.getMessage());
 		}
 		catch (ExpiredJwtException expiredException)
 		{
-			logger.error("JWT Token is expired :{}", expiredException.getMessage());
+			throw new UnAuthorizationException("JWT Token is expired :" + expiredException.getMessage());
 		}
 		catch (UnsupportedJwtException unsupportException) 
 		{
-			logger.error("JWT Token is unsupported: {}", unsupportException.getMessage());
+			throw new UnAuthorizationException("JWT Token is unsupported: "+ unsupportException.getMessage());
 		}
 		catch (IllegalArgumentException jwtEmtyException) 
 		{
-			logger.error("JWT Token is Empty: {}", jwtEmtyException.getMessage() );
+			throw new UnAuthorizationException("JWT Token is Empty: "+ jwtEmtyException.getMessage());
 		}
-		return false;
 	}
 
 }

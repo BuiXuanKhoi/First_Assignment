@@ -63,6 +63,7 @@ public class ProductsController
 	}
 	
 	@GetMapping("/{name}")
+	@PreAuthorize("hasRole('User')")
 	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name){
 		List<ProductFeature> list =  this.productService.getListProductByCatogery(name);
 		return list;

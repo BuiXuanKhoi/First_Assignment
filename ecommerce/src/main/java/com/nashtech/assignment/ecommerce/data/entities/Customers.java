@@ -29,6 +29,15 @@ import lombok.NonNull;
 public class Customers {
 	
 	
+	
+	
+	public Customers() {
+	}
+
+
+
+
+
 	@Id
 	@GeneratedValue
 	@Column(name = "customer_id")
@@ -121,7 +130,7 @@ public class Customers {
 	private  String customerAddress;
 	
 	@Column(name = "customer_phone_numer")
-	private long customerPhoneNumber;
+	private Long customerPhoneNumber;
 
 
 

@@ -1,6 +1,8 @@
 package com.nashtech.assignment.ecommerce.exception;
 
 public class UnAuthorizationException extends RuntimeException {
+	
+	
 
 	public UnAuthorizationException() {
 		super();

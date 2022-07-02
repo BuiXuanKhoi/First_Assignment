@@ -14,11 +14,11 @@ import com.nashtech.assignment.ecommerce.data.entities.Users;
 public interface UserRepository extends JpaRepository<Users, Integer> {
 	
 	
-	@Query(value = "select * from users where user_name = :userName", nativeQuery = true)
+	@Query(value = "select * from users u where u.user_name = cast(:userName as text)", nativeQuery = true)
 	public Optional<Users> findByUserName(String userName);
 	
 	
-	@Query(value = "select * from users where user_email = :userEmail", nativeQuery =  true)
+	@Query(value = "select * from users u where u.user_email = cast(:userEmail as text)", nativeQuery =  true)
 	public Optional<Users> findByEmail(String userEmail);
 	
 

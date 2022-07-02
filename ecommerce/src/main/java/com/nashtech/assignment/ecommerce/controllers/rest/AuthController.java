@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,135 +36,45 @@ import com.nashtech.assignment.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailImpl;
 import com.nashtech.assignment.ecommerce.service.CustomerService;
 import com.nashtech.assignment.ecommerce.service.UserService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.nashtech.assignment.ecommerce.services.impl.AuthServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 	
-	private final AuthenticationManager authenticationManager;
+	private AuthServiceImpl authServiceImpl;
 	
-	private final UserRepository userRepository;
 	
-	private final RoleRepository roleRepository;
 	
-	private final CustomerRepository customerRepository;
 	
-	private final CustomerService customerService;
 	
-	private final PasswordEncoder passwordEncoder;
-	
-	private final JwtUtils jwtUtils;
+
 
 	@Autowired
-	public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-			RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, CustomerRepository customerRepository, CustomerService customerService) {
-		this.authenticationManager = authenticationManager;
-		this.userRepository = userRepository;
-		this.roleRepository = roleRepository;
-		this.customerRepository = customerRepository;
-		this.customerService = customerService;
-		this.passwordEncoder = passwordEncoder;
-		this.jwtUtils = jwtUtils;
+	public AuthController(AuthServiceImpl authServiceImpl) {
+		this.authServiceImpl = authServiceImpl;
 	}
-	
+
+
 	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest)
+	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest)
 	{
-		
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getUserPassword()));
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		String jwt = jwtUtils.generateToken(authentication);
-		
-		UserDetailImpl userDetailImpl = (UserDetailImpl) authentication.getPrincipal();
-		List<String> roles = userDetailImpl.getAuthorities().stream()
-				.map(item -> item.getAuthority())
-				.collect(Collectors.toList());
-		
-		return ResponseEntity.ok(new JwtRespond(jwt, 
-												userDetailImpl.getId(), 
-												userDetailImpl.getUsername(), 
-												userDetailImpl.getUserEmail(), 
-												roles));
-		
+		return this.authServiceImpl.loginAccount(loginRequest);	
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> continueRegisterCustomer(@Valid @RequestBody RegisterCustomer registerCustomer)
+	public ResponseEntity<?> continueRegisterCustomer(@RequestBody RegisterCustomer registerCustomer)
 	{
-		Optional<Users> usersOptional = userRepository.findById(registerCustomer.getUserId());
-		if(usersOptional.isPresent()) 
-		{
-			Users users = usersOptional.get();
-			users.setUserPassword(passwordEncoder.encode(users.getUserPassword()));
-			Customers customers = new Customers(users,
-												registerCustomer.getCustomerDateOfBirth(),
-												registerCustomer.getCustomerAddres(),
-												registerCustomer.getCustomerPhoneNumber());
-			
-			Customers savedCustomers = customerService.registerNewCustomers(customers);
-			return ResponseEntity.ok(new MessageRespond("Customer Register Success"));
-		}
-		
-		throw new ResourceNotFoundException("User ID Not Found");
-		
-		
+		return this.authServiceImpl.continueRegisterCustomer(registerCustomer);		
 	}
 	
 	
 	
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest)
+	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest)
 	{
-		
-		try
-		{
-		
-		Optional<Users> userByEmail = userRepository.findByEmail(signupRequest.getUserEmail());
-		Optional<Users> userByName = userRepository.findByUserName(signupRequest.getUserName());
-		
-		if(userByName.isPresent()) 
-		{
-			return ResponseEntity.badRequest().body(new MessageRespond("Error : User name has been taken !"));
-		}
-		
-		if(userByEmail.isPresent()) 
-		{
-			return ResponseEntity.badRequest().body(new MessageRespond("Error : Email is already in use ! "));
-		}
-		
-		//Register User
-		
-		Users users = new Users( signupRequest.getUserEmail(),
-								signupRequest.getUserName(), 
-								passwordEncoder.encode(signupRequest.getUserPassword())); // Because we cannot store password as text in database
-		
-		String roles = signupRequest.getRole();
-		
-		Optional<Roles> roleOptional = roleRepository.findRoleByName(roles);
-		
-		if(roleOptional.isPresent())
-		{
-			Roles roleEntity = roleOptional.get();
-			users.setRoles(roleEntity);
-			users.setUserId(0);
-			userRepository.save(users);
-			
-			return ResponseEntity.ok(new MessageRespond("Register Successfulyl !"));
-		}
-		
-		throw new ResourceNotFoundException("Cannot find that Roles");
-		}
-		catch (Exception e) 
-		{
-			return ResponseEntity.badRequest().body((new MessageRespond("Fail Signup :  " + e.getMessage())));
-		}
-		
+		return this.authServiceImpl.registerUser(signupRequest);	
 	}
 	
 

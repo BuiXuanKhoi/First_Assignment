@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.nashtech.assignment.ecommerce.DTO.respond.ErrorResponse;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 
 
 @ControllerAdvice
@@ -78,6 +79,15 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 		
 		ErrorResponse errorResponse = new ErrorResponse(statusCode, message, errors);
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler
+	protected ResponseEntity<ErrorResponse> handleUnauthorizationException(UnAuthorizationException unauth){
+		int statusCode = HttpStatus.UNAUTHORIZED.value();
+		String message = unauth.getMessage();
+		
+		ErrorResponse errorResponse = new ErrorResponse(statusCode,  message);
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNAUTHORIZED);	
 	}
 	
 	

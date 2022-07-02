@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailServiceImpl;
 
 @Component
@@ -25,7 +26,6 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 	
 	private final UserDetailServiceImpl userDetailServiceImpl;
 	
-	private static final Logger logger = LoggerFactory.getLogger(JwtAuthTokenFilter.class);
 	
 	
 
@@ -55,7 +55,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 		} 
 		catch (Exception e) 
 		{
-			logger.error("Cannot set authentication : ", e);
+			throw new UnAuthorizationException("CANNOT SET AUTHENTICATION " + e.getMessage()) ;
 		}
 		
 		filterChain.doFilter(request, response);
