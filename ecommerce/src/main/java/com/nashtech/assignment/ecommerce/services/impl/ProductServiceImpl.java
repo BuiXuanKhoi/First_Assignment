@@ -11,6 +11,8 @@ import java.util.Optional;
 import org.hibernate.mapping.Any;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -53,10 +55,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<ProductFeature> getListProductByCatogery(String name) 
+	public List<ProductFeature> getListProductByCatogery(String name, int pageNumber, int pageSize) 
 	{
-		
-		List<Optional<ProductFeature>> list = this.productRepository.getListProductByCatogery(name);
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		List<Optional<ProductFeature>> list = this.productRepository.getListProductByCatogery(name,pageable);
 		List<ProductFeature> listFeatures = new ArrayList<ProductFeature>();
 		
 		if(!list.isEmpty())
@@ -116,6 +118,8 @@ public class ProductServiceImpl implements ProductService {
 				
 		return modelMapper.map(savedProducts, ProductRespondDTO.class);
 	}
+
+
 
 
 	

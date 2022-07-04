@@ -44,7 +44,7 @@ public class Customers {
 	private int customerId;
 	
 	@OneToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@NonNull
 	private Users users;
 	
@@ -64,8 +64,6 @@ public class Customers {
 	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CartItems> cartItems;
 	
-	@OneToOne(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private ProductFeedback productFeedback;
 	
 
 	

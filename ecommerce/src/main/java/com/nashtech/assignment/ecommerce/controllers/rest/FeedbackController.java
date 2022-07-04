@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,16 @@ public class FeedbackController {
 	public ProductFeedback addFeedback(@RequestBody ProductFeedback productFeedback) {
 		return this.productFeedbackService.saveFeedback(productFeedback);
 	};
+	
+	@DeleteMapping
+	public String deleteFeedback(@RequestBody int feedbackId) {
+		return this.productFeedbackService.deleteById(feedbackId);
+	}
+	
+	@GetMapping("/details")
+	public List<ProductFeedback> getFeedbackByUser(){
+		return this.productFeedbackService.getListFeedbackByUser();
+	}
 	
 	
 

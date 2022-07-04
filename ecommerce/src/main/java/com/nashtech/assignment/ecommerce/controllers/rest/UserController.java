@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Consumer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ import com.nashtech.assignment.ecommerce.service.UserService;
 
 import net.bytebuddy.asm.Advice.Return;
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -40,32 +41,27 @@ public class UserController {
 	}
 	
 	@GetMapping
-	@PreAuthorize("hasRole('Admin')")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public List<UserRespondDTO> getAllUsers()
 	{
 		return this.userService.getAllUsers();
 	}
 	
 	
-	
-	@PostMapping
-	public UserRespondDTO addNewUser(@Validated @RequestBody UserRequestDTO userRequestDTO)
-	{
-			userRequestDTO.setUserId(0);
-			return this.userService.addNewUser(userRequestDTO);	
-	}
-	
 	@PutMapping
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public Users updateUsers(@RequestBody Users users) {
 		return this.userService.updateUsers(users);
 	}
 	
 	@DeleteMapping
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public void deleteUserById(@RequestBody int id) {
 			this.userService.deleteUserById(id);
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public Optional<Users> findUserById(@PathVariable("id") int id){
 		Optional<Users> users = this.userService.findUserById(id);
 		

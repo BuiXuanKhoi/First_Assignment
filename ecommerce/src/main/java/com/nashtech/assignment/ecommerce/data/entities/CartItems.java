@@ -51,13 +51,7 @@ public class CartItems {
 		this.product = product;
 	}
 
-	public Cart getCart() {
-		return cart;
-	}
 
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
 
 	public Customers getCustomer() {
 		return customers;

@@ -10,6 +10,7 @@ import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -38,25 +39,30 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
 		try
 		{
 			String jwt = parseJwt(request);
+			System.out.println(jwt);
 			if(jwt != null && jwtUtils.validateToken(jwt) ) 
 			{
 				String userName = jwtUtils.getUserNameFromToken(jwt);
 				
 				UserDetails userDetails = userDetailServiceImpl.loadUserByUsername(userName);
 				
-				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 			
 		} 
 		catch (Exception e) 
 		{
+			System.out.println(1234);
 			throw new UnAuthorizationException("CANNOT SET AUTHENTICATION " + e.getMessage()) ;
 		}
+		System.out.println(123);
 		
 		filterChain.doFilter(request, response);
 		

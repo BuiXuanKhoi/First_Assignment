@@ -30,12 +30,13 @@ public class CustomerController {
 	
 	
 	@PutMapping
+	@PreAuthorize("hasAuthority('CUSTOMER')")
 	public Customers editCustomerInfo(@RequestBody Customers customers) {
 		return this.customerService.editCustomerInfo(customers);
 	}
 	
 	@GetMapping
-	@PreAuthorize("hasRole('Admin')")
+	@PreAuthorize("hasAuthority('Admin')")
 	public List<Customers> getListCustomers(){
 		return this.customerService.getListCustomers();
 	}

@@ -1,5 +1,7 @@
 package com.nashtech.assignment.ecommerce.data.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,9 @@ public interface ProductFeedbackRepository extends JpaRepository<ProductFeedback
 	
 	@Query(value = "insert into product_feedback values :productFeedback where :producefeedback.product_id ", nativeQuery = true)
 	public ProductFeedback saveProductFeedback(ProductFeedback productFeedback);
+	
+	@Query(value = "select * from product_feedback where user_id = :userId ", nativeQuery = true)
+	public List<ProductFeedback> getListFeedbackByUser(int userId);
 	
 	
 

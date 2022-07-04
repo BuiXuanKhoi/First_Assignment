@@ -45,38 +45,40 @@ public class ProductsController
 	
 	
 	@PostMapping
-	@PreAuthorize("hasRole('User')")
+	@PreAuthorize("hasAuthority('CUSTOMER')")
 	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) {
 		return this.productService.addNewProduct(productRequest);
 	}
 	
 	@PutMapping
+	@PreAuthorize("hasAuthority('CUSTOMER')")
 	public ProductRespondDTO updateProducts(@Validated @RequestBody ProductRequestDTO productRequestDTO)
 	{
 		return this.productService.saveProduct(productRequestDTO);
 	}
 	
 	@GetMapping("/{name}/decrease")
-	@PreAuthorize("hasRole('User') or hasRole('Admin')")
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public List<ProductFeature> getListProductsByPriceDecrease(@PathVariable("name") String catogeryName){
 		return this.productService.getProductByPriceDecrease(catogeryName);
 	}
 	
-	@GetMapping("/{name}")
-	@PreAuthorize("hasRole('User')")
-	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name){
-		List<ProductFeature> list =  this.productService.getListProductByCatogery(name);
-		return list;
+	@GetMapping("/{name}/{number}/{size}")
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
+	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name, @PathVariable("number") int pageNumber, @PathVariable("size") int pageSize){
+		return  this.productService.getListProductByCatogery(name, pageNumber, pageSize);
 	}
 	
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public List<ProductRespondDTO> getAllProducts()
 	{
 		return this.productService.getAllProducts();
 	}
 	
 	@GetMapping("/{name}/increase")
+	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public List<ProductFeature>getListOfProductIncreaseInPrice(@PathVariable("name") String catogeryName)
 	{
 		return this.productService.getProductByPriceIncrease(catogeryName);

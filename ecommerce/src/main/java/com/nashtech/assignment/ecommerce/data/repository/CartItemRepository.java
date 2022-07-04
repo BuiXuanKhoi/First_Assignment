@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.nashtech.assignment.ecommerce.data.entities.CartItems;
@@ -18,6 +19,11 @@ public interface CartItemRepository extends JpaRepository<CartItems, Integer> {
 	@Query(value = "select * from cart_detail c "
 			+ "inner join products p on c.product_id = p.product_id  ", nativeQuery = true)
 	CartItems findByCartAndProductName(int cart_id, String product_name);
+	
+	@Query(value = "select * from cart_detail where cart_id = :cartId", nativeQuery = true)
+	List<CartItems> getCartItemByCart(int cartId);
+	
+	
 	
 
 }

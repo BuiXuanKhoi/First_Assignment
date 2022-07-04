@@ -121,6 +121,16 @@ public class Cart {
 	public void setCustomerId(Customers customerId) {
 		this.customers = customerId;
 	}
+
+	public List<CartItems> getCartItems() {
+		return cartItems;
+	}
+
+	public void setCartItems(List<CartItems> cartItems) {
+		this.cartItems = cartItems;
+	}
+	
+	
 	
 	
 

@@ -33,8 +33,8 @@ public class ProductFeedback {
 	private Products product;
 	
 	@OneToOne
-	@JoinColumn(name = "customer_id")
-	private Customers customers;
+	@JoinColumn(name = "user_id")
+	private Users users;
 	
 	
 	@Column(name = "feedback_rating")
@@ -44,9 +44,7 @@ public class ProductFeedback {
 	private String feedbackComment;
 	
 
-	public Customers getFeedbackId() {
-		return customers;
-	}
+
 
 	
 
@@ -62,12 +60,11 @@ public class ProductFeedback {
 
 
 
-	public ProductFeedback(Integer feedbackId, Products product, Customers customers, float feedbackRating,
+	public ProductFeedback(Integer feedbackId, Products product, Users users, float feedbackRating,
 			String feedbackComment) {
-		super();
 		this.feedbackId = feedbackId;
 		this.product = product;
-		this.customers = customers;
+		this.users = users;
 		this.feedbackRating = feedbackRating;
 		this.feedbackComment = feedbackComment;
 	}
@@ -98,14 +95,6 @@ public class ProductFeedback {
 	}
 
 
-	public Customers getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(Customers customers) {
-		this.customers = customers;
-	}
-
 	public Products getProduct() {
 		return product;
 	}
@@ -113,6 +102,15 @@ public class ProductFeedback {
 	public void setProduct(Products product) {
 		this.product = product;
 	}
+
+
+
+	public Integer getFeedbackId() {
+		return feedbackId;
+	}
+	
+	
+	
 	
 	
 

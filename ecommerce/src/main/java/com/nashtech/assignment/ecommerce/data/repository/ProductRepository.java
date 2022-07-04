@@ -3,6 +3,7 @@ package com.nashtech.assignment.ecommerce.data.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 			+ "NEW com.nashtech.assignment.ecommerce.data.entities.ProductFeature(d.productPrice, d.productName , p.productCatogeryName) "
 			+ "FROM Products d "
 			+ "INNER JOIN d.productCatogery p where p.productCatogeryName = :name")
-	public List<Optional<ProductFeature>> getListProductByCatogery(String name);
+	public List<Optional<ProductFeature>> getListProductByCatogery(String name, Pageable pageable);
 	
 	
 	

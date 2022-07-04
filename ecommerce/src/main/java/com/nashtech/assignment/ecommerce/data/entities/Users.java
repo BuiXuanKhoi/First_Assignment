@@ -1,6 +1,7 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -143,6 +144,14 @@ public class Users {
 	
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL )
 	private Customers customers;
+	
+	@OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
+	private Admin admin;
+	
+	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+	private ProductFeedback productFeedbacks;
+	
+	
 	
 	
 

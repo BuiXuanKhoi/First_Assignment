@@ -20,7 +20,6 @@ public class OrderController {
 	
 	@Autowired
 	public OrderController(OrderService orderService) {
-		super();
 		this.orderService = orderService;
 	}
 

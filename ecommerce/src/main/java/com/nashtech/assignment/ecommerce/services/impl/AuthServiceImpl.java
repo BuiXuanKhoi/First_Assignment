@@ -13,14 +13,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.nashtech.assignment.ecommerce.data.entities.Admin;
 import com.nashtech.assignment.ecommerce.data.entities.Customers;
 import com.nashtech.assignment.ecommerce.data.entities.Roles;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
+import com.nashtech.assignment.ecommerce.data.repository.AdminRepository;
 import com.nashtech.assignment.ecommerce.data.repository.CustomerRepository;
 import com.nashtech.assignment.ecommerce.data.repository.RoleRepository;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import com.nashtech.assignment.ecommerce.payload.request.LoginRequest;
+import com.nashtech.assignment.ecommerce.payload.request.RegisterAdmin;
 import com.nashtech.assignment.ecommerce.payload.request.RegisterCustomer;
 import com.nashtech.assignment.ecommerce.payload.request.SignupRequest;
 import com.nashtech.assignment.ecommerce.payload.respond.JwtRespond;
@@ -51,13 +55,15 @@ public class AuthServiceImpl implements AuthService {
 	
 	private final CustomerService customerService;
 	
+	private final AdminRepository adminRepository;
+	
 	
 
 	
 	@Autowired
 	public AuthServiceImpl(CustomerRepository customerRepository, UserRepository userRepository, JwtUtils jwtUtils,
 			JwtAuthTokenFilter jwtAuthTokenFilter, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-			AuthenticationManager authenticationManager, CustomerService customerService) {
+			AuthenticationManager authenticationManager, CustomerService customerService, AdminRepository adminRepository) {
 		this.customerRepository = customerRepository;
 		this.userRepository = userRepository;
 		this.jwtUtils = jwtUtils;
@@ -66,6 +72,7 @@ public class AuthServiceImpl implements AuthService {
 		this.passwordEncoder = passwordEncoder;
 		this.authenticationManager = authenticationManager;
 		this.customerService = customerService;
+		this.adminRepository = adminRepository;
 	}
 
 
@@ -122,14 +129,18 @@ public class AuthServiceImpl implements AuthService {
 		if(usersOptional.isPresent()) 
 		{
 			Users users = usersOptional.get();
-			users.setUserPassword(passwordEncoder.encode(users.getUserPassword()));
-			Customers customers = new Customers(users,
+			if(users.getCatogeryUserId() == 1)
+			{
+				users.setUserPassword(passwordEncoder.encode(users.getUserPassword()));
+				Customers customers = new Customers(users,
 												registerCustomer.getCustomerDateOfBirth(),
 												registerCustomer.getCustomerAddres(),
 												registerCustomer.getCustomerPhoneNumber());
 			
-			Customers savedCustomers = customerService.registerNewCustomers(customers);
-			return ResponseEntity.ok(new MessageRespond("Customer Register Success"));
+				Customers savedCustomers = customerService.registerNewCustomers(customers);
+				return ResponseEntity.ok(new MessageRespond("Customer Register Success"));
+			}
+			throw new UnAuthorizationException("Cannot register due to wrong Role");
 		}
 		
 		throw new ResourceNotFoundException("User ID Not Found");
@@ -162,6 +173,30 @@ public class AuthServiceImpl implements AuthService {
 		}
 
 	}
+
+
+
+	@Override
+	public ResponseEntity<?> continueRegisterAdmin(RegisterAdmin registerAdmin) 
+	{
+		Optional<Users> userOptional = this.userRepository.findById(registerAdmin.getUserId());
+		
+		if(userOptional.isPresent())
+		{
+			Users users = userOptional.get();
+			if(users.getCatogeryUserId() == 2) 
+			{
+				users.setUserPassword(passwordEncoder.encode(users.getUserPassword()));
+				Admin admin = new Admin(0,registerAdmin.getAdminGender(), users);
+				Admin savedAdmin = this.adminRepository.save(admin);
+				return ResponseEntity.ok("Register Admin Success");
+			}
+			throw new UnAuthorizationException("Cannot register due to wrong Role");
+		}
+		throw new ResourceNotFoundException("User ID Not Found");
+	}
+	
+	
 	
 	
 

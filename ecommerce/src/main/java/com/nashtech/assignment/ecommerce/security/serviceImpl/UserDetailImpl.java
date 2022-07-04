@@ -5,12 +5,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
+import com.nashtech.assignment.ecommerce.security.jwt.JwtAuthEntryPoint;
 
 public class UserDetailImpl implements UserDetails {
 	
@@ -20,10 +23,12 @@ public class UserDetailImpl implements UserDetails {
 	
 	private String userEmail;
 	
-	@JsonIgnore
 	private String userPassword;
 	
 	private  Collection<? extends GrantedAuthority> authorities;
+	
+	private static final Logger log = LoggerFactory.getLogger(UserDetailImpl.class);
+
 	
 	
 	
@@ -31,7 +36,6 @@ public class UserDetailImpl implements UserDetails {
 
 	public UserDetailImpl(int id, String userName, String userEmail, String userPassword,
 			Collection<? extends GrantedAuthority> authorities) {
-		super();
 		this.id = id;
 		this.userName = userName;
 		this.userEmail = userEmail;
@@ -45,6 +49,7 @@ public class UserDetailImpl implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 		authorities.add(new SimpleGrantedAuthority(users.getRoles().getRoleName()));
+		log.error("Authority: {}  ", authorities);
 		
 		return new UserDetailImpl(users.getUserId(), 
 				users.getUserName(), 

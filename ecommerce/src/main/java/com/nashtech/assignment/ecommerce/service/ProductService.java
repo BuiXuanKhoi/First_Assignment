@@ -28,7 +28,8 @@ public interface ProductService {
 	public ProductRespondDTO addNewProduct(ProductRequestDTO productRequest);
 	
 	
-	public List<ProductFeature> getListProductByCatogery(String name);
+	public List<ProductFeature> getListProductByCatogery(String name, int pageNumber, int pageSize);
+	
 	
 
 	

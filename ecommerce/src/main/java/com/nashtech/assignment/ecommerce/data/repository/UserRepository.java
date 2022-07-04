@@ -21,6 +21,9 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	@Query(value = "select * from users u where u.user_email = cast(:userEmail as text)", nativeQuery =  true)
 	public Optional<Users> findByEmail(String userEmail);
 	
+	@Query(value = "select user_id from users where user_name = :userName", nativeQuery = true)
+	public int getIdByName(String userName);
+	
 
 	
 

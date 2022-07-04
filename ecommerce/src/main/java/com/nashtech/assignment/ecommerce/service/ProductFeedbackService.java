@@ -9,5 +9,9 @@ public interface ProductFeedbackService {
 	public ProductFeedback saveFeedback(ProductFeedback productFeedback);
 	
 	public List<ProductFeedback> getFeedbackList();
+	
+	public String deleteById(int id);
+	
+	public List<ProductFeedback> getListFeedbackByUser();
 
 }

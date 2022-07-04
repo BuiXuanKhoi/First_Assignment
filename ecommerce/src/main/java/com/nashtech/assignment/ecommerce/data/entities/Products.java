@@ -66,6 +66,9 @@ public class Products implements Serializable {
 	@Column(name = "product_describe")
 	private String productDescribe;
 	
+	@Column(name = "product_image")
+	private String productImage;
+	
 	@Column(name = "product_quantity")
 	private int productQuantity;
 	
@@ -191,6 +194,20 @@ public class Products implements Serializable {
 		this.productCreateDay = productCreateDay;
 		this.productUpdateDay = productUpdateDay;
 	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	
+	
 	
 	
 	
