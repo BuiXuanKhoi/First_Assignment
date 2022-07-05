@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany; 	
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -42,7 +43,7 @@ public class Cart {
 	@Column(name = "cart_update_day")
 	private Date cartUpdateDay;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	@NonNull
 	private Customers customers;
@@ -60,7 +61,6 @@ public class Cart {
 
 	public Cart(Integer cartId, int cartQuantity, int cartTotalPrice, Date cartCreateDay, Date cartUpdateDay,
 			Customers customerId) {
-		super();
 		this.cartId = cartId;
 		this.cartQuantity = cartQuantity;
 		this.cartTotalPrice = cartTotalPrice;

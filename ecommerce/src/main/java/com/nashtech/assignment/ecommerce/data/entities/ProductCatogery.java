@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -33,11 +35,10 @@ public class ProductCatogery implements Serializable {
 	private String productCatogeryName;
 	
 	@OneToMany(mappedBy = "productCatogery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Products> products;
+	private List<Products> ListProducts;
 	
 
 	public ProductCatogery(Integer productCatogeryId) {
-		super();
 		this.productCatogeryId = productCatogeryId;
 	}
 	
@@ -62,6 +63,27 @@ public class ProductCatogery implements Serializable {
 	public void setProductCatogeryName(String productCatogeryName) {
 		this.productCatogeryName = productCatogeryName;
 	}
+
+	public List<Products> getListProducts() {
+		return ListProducts;
+	}
+
+	public void setListProducts(List<Products> listProducts) {
+		this.ListProducts = listProducts;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductCatogery [productCatogeryId=" + productCatogeryId + ", productCatogeryName="
+				+ productCatogeryName + ", ListProducts=" + ListProducts + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 
 	

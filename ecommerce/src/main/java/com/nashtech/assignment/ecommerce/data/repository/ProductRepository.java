@@ -20,23 +20,19 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 	@Query(value = "select * from products where product_id = :id", nativeQuery = true)
 	Products findProductsById(int id);
 	
-	@Query(value = "SELECT "
-			+ "NEW com.nashtech.assignment.ecommerce.data.entities.ProductFeature(d.productPrice, d.productName , p.productCatogeryName) "
-			+ "FROM Products d "
-			+ "INNER JOIN d.productCatogery p where p.productCatogeryName = :catogeryName order by d.productPrice asc")
-	List<ProductFeature> getProductByPriceIncrease(String catogeryName);
+	@Query(value = "select * from products "
+			+ "where product_catogery_id = (select product_catogery_id from product_catogery where product_catogery_name = :catogeryName) "
+			+ "order by product_price asc ", nativeQuery = true)
+	List<Products> getProductByPriceIncrease(String catogeryName);
 	
-	@Query(value = "SELECT "
-			+ "NEW com.nashtech.assignment.ecommerce.data.entities.ProductFeature(d.productPrice, d.productName , p.productCatogeryName) "
-			+ "FROM Products d "
-			+ "INNER JOIN d.productCatogery p where p.productCatogeryName = :catogeryName order by d.productPrice desc")
-	List<ProductFeature> getProductByPriceDecrease(String catogeryName);
+	@Query(value = "select * from products "
+			+ "where product_catogery_id = (select product_catogery_id from product_catogery where product_catogery_name = :catogeryName) "
+			+ "order by product_price desc ", nativeQuery = true)
+	List<Products> getProductByPriceDecrease(String catogeryName);
 	
-	@Query(value = "SELECT "
-			+ "NEW com.nashtech.assignment.ecommerce.data.entities.ProductFeature(d.productPrice, d.productName , p.productCatogeryName) "
-			+ "FROM Products d "
-			+ "INNER JOIN d.productCatogery p where p.productCatogeryName = :name")
-	public List<Optional<ProductFeature>> getListProductByCatogery(String name, Pageable pageable);
+
+	
+	
 	
 	
 	

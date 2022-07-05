@@ -1,6 +1,7 @@
 package com.nashtech.assignment.ecommerce.controllers.rest;
 
 import java.lang.reflect.Array;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +19,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
+import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
+import com.nashtech.assignment.ecommerce.exception.ApiDeniedException;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.service.ProductService;
 
@@ -43,11 +47,21 @@ public class ProductsController
 		this.productService = productService;
 	}
 	
+
+	
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) {
-		return this.productService.addNewProduct(productRequest);
+	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) 
+	{
+		try
+		{
+			return this.productService.addNewProduct(productRequest);
+		} catch (Exception accessDeniedException) 
+		{
+			throw new ApiDeniedException("Only Customer can add product");
+		}
+		
 	}
 	
 	@PutMapping
@@ -57,18 +71,12 @@ public class ProductsController
 		return this.productService.saveProduct(productRequestDTO);
 	}
 	
-	@GetMapping("/{name}/decrease")
-	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public List<ProductFeature> getListProductsByPriceDecrease(@PathVariable("name") String catogeryName){
-		return this.productService.getProductByPriceDecrease(catogeryName);
-	}
 	
-	@GetMapping("/{name}/{number}/{size}")
+	@GetMapping("/{name}/{mode}")
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public List<ProductFeature> getListProductByCategory(@PathVariable("name") String name, @PathVariable("number") int pageNumber, @PathVariable("size") int pageSize){
-		return  this.productService.getListProductByCatogery(name, pageNumber, pageSize);
+	public ProductCatogery getListProductByCategory(@PathVariable("name") String name, @PathVariable("mode") String mode){
+		return  this.productService.getListProductByCatogery(name, mode);
 	}
-	
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
@@ -77,10 +85,4 @@ public class ProductsController
 		return this.productService.getAllProducts();
 	}
 	
-	@GetMapping("/{name}/increase")
-	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public List<ProductFeature>getListOfProductIncreaseInPrice(@PathVariable("name") String catogeryName)
-	{
-		return this.productService.getProductByPriceIncrease(catogeryName);
-	}
 }

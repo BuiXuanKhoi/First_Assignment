@@ -52,13 +52,13 @@ public class Customers {
 	//----------------------------
 	
 	
-	
-	@OneToOne(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
-	private Orders orders;
+	@JsonIgnore
+	@OneToMany(mappedBy = "customers")
+	private List<Orders> orders;
 	
 	@JsonIgnore
-	@OneToOne(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Cart cart;
+	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Cart> cart;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

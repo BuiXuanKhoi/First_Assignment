@@ -32,6 +32,8 @@ public class ProductRespondDTO {
 	private int productQuantity;
 	private Date productCreateDay;
 	private Date productUpdateDay;
+	
+	@JsonIgnore
 	private ProductCatogery productCatogery;
 	
 	
@@ -88,12 +90,14 @@ public class ProductRespondDTO {
 		return productCatogery;
 	}
 	
-	
+	@JsonIgnore
 	// Expose only category id
 	@JsonProperty("Catogery ID")
 	public int getProductCatogeryId() {
 		return productCatogery.getProductCatogeryId();
 	}
+	
+	@JsonIgnore
 	public void setProductCatogery(ProductCatogery productCatogery) {
 		this.productCatogery = productCatogery;
 	}

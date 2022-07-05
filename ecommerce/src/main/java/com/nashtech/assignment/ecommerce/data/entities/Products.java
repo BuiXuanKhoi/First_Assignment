@@ -83,6 +83,7 @@ public class Products implements Serializable {
 	
 	
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_catogery_id")
 	private ProductCatogery productCatogery;
@@ -95,9 +96,9 @@ public class Products implements Serializable {
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> orderItem ;
 	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private ProductFeedback productFeedback;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<ProductFeedback> productFeedback;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -159,14 +160,8 @@ public class Products implements Serializable {
 		this.productQuantity = productQuantity;
 	}
 
-	public ProductCatogery getProductCatogery() {
-		return productCatogery;
-	}
-	
 
-	public void setProductCatogery(ProductCatogery productCatogery) {
-		this.productCatogery = productCatogery;
-	}
+
 
 	public Date getProductCreateDay() {
 		return productCreateDay;
@@ -206,6 +201,17 @@ public class Products implements Serializable {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
+	@JsonIgnore
+	public List<ProductFeedback> getProductFeedback() {
+		return productFeedback;
+	}
+
+	@JsonIgnore
+	public void setProductFeedback(List<ProductFeedback> productFeedback) {
+		this.productFeedback = productFeedback;
+	}
+	
 	
 	
 	

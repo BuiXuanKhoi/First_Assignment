@@ -13,6 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.nashtech.assignment.ecommerce.DTO.respond.ErrorResponse;
+import com.nashtech.assignment.ecommerce.exception.ApiDeniedException;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import net.bytebuddy.asm.Advice.Return;
@@ -89,6 +90,17 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 		
 		ErrorResponse errorResponse = new ErrorResponse(statusCode,  message);
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.UNAUTHORIZED);	
+	}
+	
+	@ExceptionHandler
+	protected ResponseEntity<ErrorResponse> handleApiDeniedException(ApiDeniedException apiDeniedException){
+		int statusCode = HttpStatus.FORBIDDEN.value();
+		
+		String message = apiDeniedException.getMessage();
+		
+		ErrorResponse errorResponse = new ErrorResponse(statusCode, message);
+		
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.FORBIDDEN);
 	}
 	
 	

@@ -9,9 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.NoArgsConstructor;
 
@@ -28,11 +31,13 @@ public class ProductFeedback {
 	@Column(name = "feedback_id")
 	private Integer feedbackId;
 	
-	@OneToOne
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Products product;
 	
-	@OneToOne
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Users users;
 	
@@ -43,20 +48,6 @@ public class ProductFeedback {
 	@Column(name = "feedback_comment")
 	private String feedbackComment;
 	
-
-
-
-	
-
-	public Products getProductId() {
-		return product;
-	}
-
-	public void setProductId(Products productId) {
-		this.product = productId;
-	}
-
-
 
 
 
@@ -94,14 +85,6 @@ public class ProductFeedback {
 		this.feedbackId = feedbackId;
 	}
 
-
-	public Products getProduct() {
-		return product;
-	}
-
-	public void setProduct(Products product) {
-		this.product = product;
-	}
 
 
 

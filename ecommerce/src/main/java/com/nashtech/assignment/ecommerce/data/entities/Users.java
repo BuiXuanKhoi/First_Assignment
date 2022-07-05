@@ -119,6 +119,18 @@ public class Users {
 	public void setCatogeryUserId(Roles catogeryUserId) {
 		this.roles = catogeryUserId;
 	}
+	
+	
+
+	public List<ProductFeedback> getProductFeedbacks() {
+		return productFeedbacks;
+	}
+
+	public void setProductFeedbacks(List<ProductFeedback> productFeedbacks) {
+		this.productFeedbacks = productFeedbacks;
+	}
+
+
 
 	@Column(name = "user_email")
 	@NonNull
@@ -148,8 +160,8 @@ public class Users {
 	@OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
 	private Admin admin;
 	
-	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-	private ProductFeedback productFeedbacks;
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	private List<ProductFeedback> productFeedbacks;
 	
 	
 	

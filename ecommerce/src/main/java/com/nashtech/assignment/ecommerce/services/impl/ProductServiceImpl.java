@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 
 import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
+import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
+import com.nashtech.assignment.ecommerce.data.repository.ProductCatogeryRepository;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.service.ProductService;
@@ -32,11 +34,14 @@ public class ProductServiceImpl implements ProductService {
 	
 	private ModelMapper modelMapper;
 	
+	private ProductCatogeryRepository productCatogeryRepository;
+	
 	
 	@Autowired
-	public ProductServiceImpl( ProductRepository productRepository, ModelMapper modelMapper) {
+	public ProductServiceImpl( ProductRepository productRepository, ModelMapper modelMapper, ProductCatogeryRepository productCatogeryRepository) {
 		this.productRepository = productRepository;
 		this.modelMapper = modelMapper;
+		this.productCatogeryRepository = productCatogeryRepository;
 	}
 	
 
@@ -54,26 +59,6 @@ public class ProductServiceImpl implements ProductService {
 		throw new ResourceNotFoundException("Cannot find any products in storage");
 	}
 	
-	@Override
-	public List<ProductFeature> getListProductByCatogery(String name, int pageNumber, int pageSize) 
-	{
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		List<Optional<ProductFeature>> list = this.productRepository.getListProductByCatogery(name,pageable);
-		List<ProductFeature> listFeatures = new ArrayList<ProductFeature>();
-		
-		if(!list.isEmpty())
-		{	
-			for(int i =0; i < list.size();i++)
-			{
-				listFeatures.add(list.get(i).get());
-			}
-			
-			return listFeatures;
-		}
-		throw new ResourceNotFoundException("Cannot found any products belong to list " + name);
-	}
-	
-	
 
 	@Override
 	public ProductRespondDTO getProductById(int id)
@@ -89,13 +74,7 @@ public class ProductServiceImpl implements ProductService {
 		throw new ResourceNotFoundException("Product Not Found With ID "+ id);
 	}
 
-	@Override
-	public List<ProductFeature> getProductByPriceIncrease(String catogeryName)
-	{
-		List<ProductFeature> listOfProducts =  this.productRepository.getProductByPriceIncrease(catogeryName);
 
-		return listOfProducts;
-	}
 
 	@Override
 	public ProductRespondDTO saveProduct(ProductRequestDTO productRequestDTO) {
@@ -103,11 +82,6 @@ public class ProductServiceImpl implements ProductService {
 		this.productRepository.save(products);
 		
 		return modelMapper.map(products, ProductRespondDTO.class);
-	}
-
-	@Override
-	public List<ProductFeature> getProductByPriceDecrease(String catogeryName) {
-		return this.productRepository.getProductByPriceDecrease(catogeryName);
 	}
 
 
@@ -118,6 +92,34 @@ public class ProductServiceImpl implements ProductService {
 				
 		return modelMapper.map(savedProducts, ProductRespondDTO.class);
 	}
+
+
+	@Override
+	public ProductCatogery getListProductByCatogery(String name, String mode)
+	{
+		Optional<ProductCatogery> catogeryOptional = this.productCatogeryRepository.getCatogeryByName(name);
+		if(catogeryOptional.isPresent()) 
+		{
+			ProductCatogery productCatogery = catogeryOptional.get();
+			if(mode.equals("")) 
+			{
+				return productCatogery;
+			}
+			if(mode.equals("decrease")) 
+			{
+				productCatogery.setListProducts(this.productRepository.getProductByPriceDecrease(name));
+				return productCatogery;
+			}
+			if(mode.equals("increase"))
+			{
+				productCatogery.setListProducts(this.productRepository.getProductByPriceIncrease(name));
+				return productCatogery;
+			}
+		}
+		
+		throw new ResourceNotFoundException("Catogery Not Found !");
+	}
+
 
 
 
