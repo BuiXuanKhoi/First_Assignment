@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.nashtech.assignment.ecommerce.DTO.respond.ErrorResponse;
 import com.nashtech.assignment.ecommerce.exception.ApiDeniedException;
+import com.nashtech.assignment.ecommerce.exception.ResourceAlreadyExistException;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import net.bytebuddy.asm.Advice.Return;
@@ -101,6 +102,15 @@ public class GlobalExceptionsHandler extends ResponseEntityExceptionHandler {
 		ErrorResponse errorResponse = new ErrorResponse(statusCode, message);
 		
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.FORBIDDEN);
+	}
+	
+	@ExceptionHandler
+	protected ResponseEntity<ErrorResponse> handleAlreadyExistException(ResourceAlreadyExistException resourceAlreadyExistException){
+		int statusCode = HttpStatus.CREATED.value();
+		String message = resourceAlreadyExistException.getMessage();
+		ErrorResponse errorResponse = new ErrorResponse(statusCode, message);
+		
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.CREATED);
 	}
 	
 	

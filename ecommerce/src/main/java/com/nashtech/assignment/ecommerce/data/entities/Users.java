@@ -18,13 +18,19 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Users {
 	
 	
@@ -32,105 +38,6 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int userId;
-	
-	
-	
-
-
-
-	public Users() {
-		super();
-	}
-
-	public Users(@NonNull String userEmail, @NonNull String userName, @NonNull String userPassword) {
-		this.userEmail = userEmail;
-		this.userName = userName;
-		this.userPassword = userPassword;
-	}
-
-	public Date getUserCreateDay() {
-		return userCreateDay;
-	}
-
-	public void setUserCreateDay(Date userCreateDay) {
-		this.userCreateDay = userCreateDay;
-	}
-
-	public Roles getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Roles roles) {
-		this.roles = roles;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public Date getUserCreateDate() {
-		return userCreateDay;
-	}
-
-	public void setUserCreateDate(Date userCreateDate) {
-		this.userCreateDay = userCreateDate;
-	}
-
-	public Date getUserUpDate() {
-		return userUpDateDay;
-	}
-
-	public void setUserUpDate(Date userUpDate) {
-		this.userUpDateDay = userUpDate;
-	}
-
-	public int getCatogeryUserId() {
-		return roles.getCatogeryUserId();
-	}
-
-	public void setCatogeryUserId(Roles catogeryUserId) {
-		this.roles = catogeryUserId;
-	}
-	
-	
-
-	public List<ProductFeedback> getProductFeedbacks() {
-		return productFeedbacks;
-	}
-
-	public void setProductFeedbacks(List<ProductFeedback> productFeedbacks) {
-		this.productFeedbacks = productFeedbacks;
-	}
-
-
 
 	@Column(name = "user_email")
 	@NonNull
@@ -152,19 +59,40 @@ public class Users {
 	
 	@ManyToOne
 	@JoinColumn(name = "catogery_user_id")
+	@JsonIgnore
 	private Roles roles;
 	
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL )
 	private Customers customers;
 	
-	@OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
 	private Admin admin;
 	
 	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ProductFeedback> productFeedbacks;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Orders> listOrders;
 	
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<CartItems> cartItems;
+	
+	public int getCatogeryUserId() {
+		return this.getRoles().getRoleId();
+	}
+
+	public Users(@NonNull String userEmail, @NonNull String userName, @NonNull String userPassword) {
+		this.userEmail = userEmail;
+		this.userName = userName;
+		this.userPassword = userPassword;
+	}
 	
 	
+
+
 
 }

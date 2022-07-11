@@ -1,44 +1,37 @@
 package com.nashtech.assignment.ecommerce.DTO.request;
 
-import java.sql.Date;
 
+import java.util.Date;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerUpdateDTO {
 	
-	@NotEmpty(message = "Please enter your date of birth")
+	@JsonProperty("id")
+	private int customerId;
+	
+	@NotBlank(message = "Please enter your date of birth")
+	@JsonProperty("date of birth")
 	private Date customerDateOfBirthDate;
 	
-	@NotEmpty(message = "This field cannot be empty")
+	@NotBlank(message = "This field cannot be empty")
+	@JsonProperty("phone number")
 	private int customerPhoneNumber;
 	
-	@NotEmpty(message = "This field cannot be empty")
+	@NotBlank(message = "This field cannot be empty")
+	@JsonProperty("address")
 	private String customerAddress;
-
-	public Date getCustomerDateOfBirthDate() {
-		return customerDateOfBirthDate;
-	}
-
-	public void setCustomerDateOfBirthDate(Date customerDateOfBirthDate) {
-		this.customerDateOfBirthDate = customerDateOfBirthDate;
-	}
-
-	public int getCustomerPhoneNumber() {
-		return customerPhoneNumber;
-	}
-
-	public void setCustomerPhoneNumber(int customerPhoneNumber) {
-		this.customerPhoneNumber = customerPhoneNumber;
-	}
-
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-	
-	
 
 }

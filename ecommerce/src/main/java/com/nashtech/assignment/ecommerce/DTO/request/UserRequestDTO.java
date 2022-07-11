@@ -13,33 +13,25 @@ public class UserRequestDTO {
 
 	EntityManager entityManager;
 	
-	@NotBlank(message = "Please enter your email")
+	@NotBlank(message = "Email is required")
+	@Min(value = 5, message = "Name should have at least 5 character")
 	@Email(message = "Invalid Email Address")
 	private String userEmail;
 	
+	@NotBlank(message = "Please enter password")
 	@Min(value = 8, message = "Password at least has 8 characters")
 	private String userPassword;
 	
-	@NotBlank(message = "Name cannot be null")
+	@NotBlank(message = "Please enter user name")
 	private String userName;
 	
-	private Roles roles;
 	
-	private int userId;
+
 	
 	//-------------------------------------------------------Getter & Setter-----------------------------------------------
 
 
-	public Roles getRoles() {
-		return roles;
-	}
 
-	public void setRoles(String roleName) {
-		Query roleIDQuery = entityManager.createQuery("SELECT r FROM roles r where r.catogery_user_role = :roleName");
-		Roles roles = (Roles) roleIDQuery.getSingleResult();
-		roles.setRoleName(roleName);
-		this.roles = roles;
-	}
 
 	public String getUserEmail() {
 		return userEmail;
@@ -64,13 +56,10 @@ public class UserRequestDTO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	
+	
+	
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 
 }

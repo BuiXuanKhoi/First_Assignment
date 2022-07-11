@@ -16,7 +16,7 @@ import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.service.CustomerService;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 	
 	private CustomerService customerService;
@@ -32,7 +32,7 @@ public class CustomerController {
 	@PutMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
 	public Customers editCustomerInfo(@RequestBody Customers customers) {
-		return this.customerService.editCustomerInfo(customers);
+		return this.customerService.updateCustomer(customers);
 	}
 	
 	@GetMapping

@@ -21,12 +21,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customers registerNewCustomers(Customers customers) {
-		customers.setCustomerId(0);
 		return this.customerRepository.save(customers);
 	}
 
 	@Override
-	public Customers editCustomerInfo(Customers customers) {
+	public Customers updateCustomer(Customers customers) {
 		return this.customerRepository.save(customers);
 	}
 

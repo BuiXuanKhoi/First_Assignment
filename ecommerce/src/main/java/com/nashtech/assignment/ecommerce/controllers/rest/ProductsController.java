@@ -6,13 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.hibernate.mapping.Any;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.assignment.ecommerce.DTO.request.ProductRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.ProductUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.ProductRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 import com.nashtech.assignment.ecommerce.data.entities.ProductFeature;
@@ -30,14 +37,18 @@ import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.exception.ApiDeniedException;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
+import com.nashtech.assignment.ecommerce.security.jwt.JwtAuthEntryPoint;
 import com.nashtech.assignment.ecommerce.service.ProductService;
 
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductsController 
 {
 	private ProductService productService;
+	
+	private static final Logger log = LoggerFactory.getLogger(ProductsController.class);
+
 	
 	
 	
@@ -52,34 +63,35 @@ public class ProductsController
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public ProductRespondDTO addNewProducts(@Valid @RequestBody ProductRequestDTO productRequest) 
+	public ProductRespondDTO addNewProducts( @RequestBody ProductRequestDTO productRequest,
+			@RequestParam(name = "catogery", required = true, defaultValue = "Tablet") String catogeryName) 
 	{
-		try
-		{
-			return this.productService.addNewProduct(productRequest);
-		} catch (Exception accessDeniedException) 
-		{
-			throw new ApiDeniedException("Only Customer can add product");
-		}
-		
+		  return this.productService.addNewProduct(productRequest, catogeryName);
 	}
 	
-	@PutMapping
+	@PatchMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public ProductRespondDTO updateProducts(@Validated @RequestBody ProductRequestDTO productRequestDTO)
+	public ProductRespondDTO updateProducts( @RequestBody ProductUpdateDTO productRequestDTO)
 	{
-		return this.productService.saveProduct(productRequestDTO);
+		return this.productService.updateProduct(productRequestDTO);
 	}
 	
 	
-	@GetMapping("/{name}/{mode}")
-	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public ProductCatogery getListProductByCategory(@PathVariable("name") String name, @PathVariable("mode") String mode){
-		return  this.productService.getListProductByCatogery(name, mode);
+	@GetMapping("/{name}")
+	@PreAuthorize("permitAll()")
+	public Page<ProductRespondDTO> getListProductByCategory(@PathVariable("name") String name,
+			@RequestParam(name = "mode", required = false, defaultValue = "asc") String mode,
+			@RequestParam(name = "size", required = false, defaultValue = "10") String size,
+			@RequestParam(name = "page",required = false, defaultValue = "1") String page
+			){
+		int sizeConvert = Integer.parseInt(size);
+		int pageConvert = Integer.parseInt(page);
+		return  this.productService.getListProductByCatogery(name, mode, pageConvert, sizeConvert);
 	}
 	
 	@GetMapping
-	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
+	@PermitAll
+	@PreAuthorize("permitAll()")
 	public List<ProductRespondDTO> getAllProducts()
 	{
 		return this.productService.getAllProducts();

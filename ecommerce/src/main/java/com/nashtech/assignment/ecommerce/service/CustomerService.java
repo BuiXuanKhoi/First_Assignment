@@ -8,7 +8,7 @@ public interface CustomerService {
 	
 	public Customers registerNewCustomers(Customers customers);
 	
-	public Customers editCustomerInfo(Customers customers);
+	public Customers updateCustomer(Customers customers);
 	
 	public List<Customers> getListCustomers();
 

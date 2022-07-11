@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.UserUpdateDTO;
 import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
@@ -29,7 +30,7 @@ import net.bytebuddy.asm.Advice.Return;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 	
 	private UserService userService;
@@ -49,30 +50,22 @@ public class UserController {
 	
 	
 	@PutMapping
+	@PreAuthorize("hasAuthority('CUSTOMER')")
+	public UserRespondDTO updateUsers(@RequestBody UserUpdateDTO userUpdateDTO) {
+		return this.userService.updateUsers(userUpdateDTO);
+	}
+	
+
+	
+	@GetMapping("/{name}")
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public Users updateUsers(@RequestBody Users users) {
-		return this.userService.updateUsers(users);
+	public UserRespondDTO findUserByName(@PathVariable("name") String name){
+		return this.userService.findUserByName(name);
 	}
 	
-	@DeleteMapping
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deleteUserById(@RequestBody int id) {
-			this.userService.deleteUserById(id);
-	}
+
 	
-	@GetMapping("/{id}")
-	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public Optional<Users> findUserById(@PathVariable("id") int id){
-		Optional<Users> users = this.userService.findUserById(id);
-		
-		if(users.isPresent()) {
-			return users;
-		}
-		
-		throw new ResourceNotFoundException("404" + " Cannot Find User Id");
-	}
-	
-	//Throw exception when error instead null.
+
 	
 	
 	

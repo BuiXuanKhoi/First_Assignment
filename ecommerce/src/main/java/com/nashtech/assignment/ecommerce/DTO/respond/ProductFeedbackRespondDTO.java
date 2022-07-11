@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nashtech.assignment.ecommerce.data.entities.Customers;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
+import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 public class ProductFeedbackRespondDTO {
 	
@@ -16,9 +17,11 @@ public class ProductFeedbackRespondDTO {
 	@JsonProperty("Rating Point")
 	private int feedbackRating;
 	
+	@JsonIgnore
 	private Products products;
 	
-	private Customers customers;
+
+	private Users users;
 
 	
 	
@@ -51,32 +54,26 @@ public class ProductFeedbackRespondDTO {
 	}
 
 	@JsonIgnore
-	public Products getProducts() {
-		return products;
+	public Users getUsers() {
+		return users;
 	}
 	
-	@JsonProperty("Product ID")
-	public int getProductID() {
-		return products.getProductId();
+	@JsonProperty("name")
+	public String getUserName() {
+		return users.getUserName();
 	}
 
-	public void setProducts(Products products) {
-		this.products = products;
-	}
-
-	@JsonIgnore
-	public Customers getCustomers() {
-		return customers;
+	public void setUsers(Users users) {
+		this.users = users;
 	}
 	
-	@JsonProperty("Customer ID")
-	public int getCustomerId() {
-		return customers.getCustomerId();
-	}
+	
 
-	public void setCustomers(Customers customers) {
-		this.customers = customers;
-	}
+
+
+
+	
+
 	
 	
 	

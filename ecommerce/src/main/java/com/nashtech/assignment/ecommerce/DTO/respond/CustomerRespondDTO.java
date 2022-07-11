@@ -16,9 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerRespondDTO {
 	
-	
-	@JsonProperty("id")
-	private int customerId;
+
 	
 	@JsonProperty("DateOfBirth")
 	private Date customerDateOfBirth;
@@ -27,19 +25,15 @@ public class CustomerRespondDTO {
 	@JsonProperty("Phone Number")
 	private String customerPhoneNumber;
 	
-	private Users userId;
+	@JsonProperty("Address")
+	private String customerAddress;
+	
 
 	
 	
 	//-------------------------------------------------Getter & Setter------------------------------------
 	
-	public int getCustomerId() {
-		return customerId;
-	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
 
 	public Date getCustomerDateOfBirth() {
 		return customerDateOfBirth;
@@ -57,16 +51,20 @@ public class CustomerRespondDTO {
 		this.customerPhoneNumber = customerPhoneNumber;
 	}
 
-
-	// Expose only user id
-	@JsonProperty("User ID")
-	public int getUserId() {
-		return userId.getUserId();
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setUserId(Users userId) {
-		this.userId = userId;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
+	
+	
+
+
+
+
+
 	
 	
 	

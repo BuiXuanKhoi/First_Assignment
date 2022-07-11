@@ -6,68 +6,50 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedDate;
 
 import com.nashtech.assignment.ecommerce.data.entities.ProductCatogery;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ProductRequestDTO {
 	
 	
 	@NotEmpty(message = "Product has to have a name")
+	@NotBlank(message = "Product has to have a name")
+	@NotNull(message = "Product has to have a name")
 	private String productName;
 	
-	@Min(value = 1, message  = "Please enter price of product")
+	@Min(value = 1, message  = "Price is required")
 	private int productPrice;
 	
-	@Min(value = 1,message = "Please enter the quantity of products")
+	@Min(value = 1,message = "Quantity is required")
 	private int productQuantity;
 	
 	private ProductCatogery productCatogery;
-	
-	
-	
-	
-	
 
-
-	public ProductCatogery getProductCatogery() {
-		return productCatogery;
-	}
-
-	public void setProductCatogery(ProductCatogery productCatogery) {
-		this.productCatogery = productCatogery;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
+	public ProductRequestDTO(@NotEmpty(message = "Product has to have a name") String productName,
+			@Min(value = 1, message = "Please enter price of product") int productPrice,
+			@Min(value = 1, message = "Please enter the quantity of products") int productQuantity) {
+		super();
 		this.productName = productName;
-	}
-
-	public int getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
-	}
-
-	public int getProductQuantity() {
-		return productQuantity;
-	}
-
-	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
+	
+	
+	
 
 }

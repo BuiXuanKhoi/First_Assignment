@@ -5,39 +5,52 @@ import java.sql.Date;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserUpdateDTO {
 	
 	@NotBlank(message = "email cannot blank")
-	private String email;
+	private String userEmail;
 	
 	@Min(value = 8, message = "Password at least has 8 characters")
-	private String password;
+	private String userPassword;
 	
-	private String name;
+	private String userName;
 
-	public String getEmail() {
-		return email;
+	
+	
+	@JsonProperty("email")
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
-	public String getPassword() {
-		return password;
+	@JsonProperty("password")
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
-	public String getName() {
-		return name;
+	@JsonProperty("name")
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
+	
+	
+	
+	
+	
 	
 	
 	

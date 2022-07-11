@@ -10,14 +10,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Table(name = "cart_detail")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class CartItems {
-	public CartItems() {}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,80 +36,16 @@ public class CartItems {
 	private Products product;
 	
 	@ManyToOne
-	@JoinColumn(name = "cart_id")
+	@JoinColumn(name = "user_id")
 	@NonNull
-	private Cart cart;
+	private Users users;
 	
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	@NonNull
-	private Customers customers;
+	@Column(name = "cart_item_quantity")
+	private int cartItemQuantity;
 	
+	@Column(name = "cart_item_total_price")
+	private int cartItemTotalPrice;
 	
-	
-
-
-	public Products getProduct() {
-		return product;
-	}
-
-	public void setProduct(Products product) {
-		this.product = product;
-	}
-
-
-
-	public Customers getCustomer() {
-		return customers;
-	}
-
-	public void setCustomer(Customers customer) {
-		this.customers = customer;
-	}
-
-	public void setCartItemId(int cartItemId) {
-		this.cartItemId = cartItemId;
-	}
-
-	public CartItems(Integer cartItemId, Products productId, Cart cartId, Customers customerId) {
-		super();
-		this.cartItemId = cartItemId;
-		this.product = productId;
-		this.cart = cartId;
-		this.customers = customerId;
-	}
-
-	public Integer getCartItemId() {
-		return cartItemId;
-	}
-
-	public void setCartItemId(Integer cartItemId) {
-		this.cartItemId = cartItemId;
-	}
-
-	public Products getProductId() {
-		return product;
-	}
-
-	public void setProductId(Products productId) {
-		this.product = productId;
-	}
-
-	public Cart getCartId() {
-		return cart;
-	}
-
-	public void setCartId(Cart cartId) {
-		this.cart = cartId;
-	}
-
-	public Customers getCustomerId() {
-		return customers;
-	}
-
-	public void setCustomerId(Customers customerId) {
-		this.customers = customerId;
-	}
 	
 	
 }

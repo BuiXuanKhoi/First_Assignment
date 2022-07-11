@@ -15,16 +15,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Table(name = "product_catogery")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class ProductCatogery implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_catogery_id")
@@ -36,66 +48,12 @@ public class ProductCatogery implements Serializable {
 	
 	@OneToMany(mappedBy = "productCatogery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Products> ListProducts;
-	
 
-	public ProductCatogery(Integer productCatogeryId) {
+	public ProductCatogery(Integer productCatogeryId, @NonNull String productCatogeryName) {
 		this.productCatogeryId = productCatogeryId;
-	}
-	
-	public ProductCatogery() {
-		
-	}
-	
-	
-
-	public Integer getProductCatogeryId() {
-		return productCatogeryId;
-	}
-
-	public void setProductCatogeryId(Integer productCatogeryId) {
-		this.productCatogeryId = productCatogeryId;
-	}
-
-	public String getProductCatogeryName() {
-		return productCatogeryName;
-	}
-
-	public void setProductCatogeryName(String productCatogeryName) {
 		this.productCatogeryName = productCatogeryName;
 	}
-
-	public List<Products> getListProducts() {
-		return ListProducts;
-	}
-
-	public void setListProducts(List<Products> listProducts) {
-		this.ListProducts = listProducts;
-	}
-
-	@Override
-	public String toString() {
-		return "ProductCatogery [productCatogeryId=" + productCatogeryId + ", productCatogeryName="
-				+ productCatogeryName + ", ListProducts=" + ListProducts + "]";
-	}
 	
 	
 	
-	
-	
-	
-	
-
-
-	
-	
-
-	
-	
-	
-	
-
-	
-	
-	
-
 }

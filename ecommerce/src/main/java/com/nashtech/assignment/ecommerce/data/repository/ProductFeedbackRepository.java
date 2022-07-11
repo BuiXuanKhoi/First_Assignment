@@ -19,8 +19,11 @@ public interface ProductFeedbackRepository extends JpaRepository<ProductFeedback
 	public List<ProductFeedback> getListFeedbackByUser(int userId);
 	
 	
-//	@Query(value = "select * from product_feedback where user_id = :userId and product_id = productId", nativeQuery = true)
-//	public List<ProductFeedback> getFeedbackByUserAndProduct(int productId, int userId);
+	@Query(value = "select * from product_feedback where user_id = :userId and product_id = :productId", nativeQuery = true)
+	public ProductFeedback getFeedbackByUserAndProduct(int productId, int userId);
+	
+	@Query(value = "select * from product_feedback where product_id = :productId", nativeQuery = true)
+	public List<ProductFeedback> getListFeedbackByProduct(int productId);
 	
 
 }

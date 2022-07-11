@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.nashtech.assignment.ecommerce.DTO.request.UserUpdateDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 
@@ -23,6 +25,9 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
 	
 	@Query(value = "select user_id from users where user_name = :userName", nativeQuery = true)
 	public int getIdByName(String userName);
+	
+
+
 	
 
 	

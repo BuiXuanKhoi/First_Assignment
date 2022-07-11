@@ -33,13 +33,18 @@ import org.springframework.data.annotation.CreatedDate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "products")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Products implements Serializable {
 
 
@@ -48,7 +53,7 @@ public class Products implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Products() {}
+	
 	
 
 	@Id
@@ -72,6 +77,10 @@ public class Products implements Serializable {
 	@Column(name = "product_quantity")
 	private int productQuantity;
 	
+	@Column(name = "product_rating")
+	private Float productRating;
+	
+	
 	
 
 	@Temporal(TemporalType.DATE)
@@ -82,10 +91,9 @@ public class Products implements Serializable {
 	private Date productUpdateDay;
 	
 	
-
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_catogery_id")
+	@JsonIgnore
 	private ProductCatogery productCatogery;
 	
 	
@@ -94,6 +102,7 @@ public class Products implements Serializable {
 	
 	
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<OrderItem> orderItem ;
 	
 
@@ -103,119 +112,17 @@ public class Products implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<CartItems> cartItems;
+
+	public Products(String productName, int productPrice, int productQuantity) {
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productQuantity = productQuantity;
+	}
 		
 	//-----------------------------
 	
-
-	
-	public List<OrderItem> getOrderItem() {
-		return orderItem;
-	}
-
-	public void setOrderItem(List<OrderItem> orderItem) {
-		this.orderItem = orderItem;
-	}
-
-
-
-
-
-	public Integer getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public Integer getProductPrice() {
-		return productPrice;
-	}
-
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-
-	public String getProductDescribe() {
-		return productDescribe;
-	}
-
-	public void setProductDescribe(String productDescribe) {
-		this.productDescribe = productDescribe;
-	}
-
-	public Integer getProductQuantity() {
-		return productQuantity;
-	}
-
-	public void setProductQuantity(int productQuantity) {
-		this.productQuantity = productQuantity;
-	}
-
-
-
-
-	public Date getProductCreateDay() {
-		return productCreateDay;
-	}
-
-	public void setProductCreateDay(Date productCreateDay) {
-		this.productCreateDay = productCreateDay;
-	}
-
-	public Date getProductUpdateDay() {
-		return productUpdateDay;
-	}
-
-	public void setProductUpdateDay(Date productUpdateDay) {
-		this.productUpdateDay = productUpdateDay;
-	}
-
-	public Products(Integer productId, String productName, int productPrice, String productDescribe,
-			int productQuantity, Date productCreateDay, Date productUpdateDay) {
-		this.productId = productId;
-		this.productName = productName;
-		this.productPrice = productPrice;
-		this.productDescribe = productDescribe;
-		this.productQuantity = productQuantity;
-		this.productCreateDay = productCreateDay;
-		this.productUpdateDay = productUpdateDay;
-	}
-
-	public String getProductImage() {
-		return productImage;
-	}
-
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	@JsonIgnore
-	public List<ProductFeedback> getProductFeedback() {
-		return productFeedback;
-	}
-
-	@JsonIgnore
-	public void setProductFeedback(List<ProductFeedback> productFeedback) {
-		this.productFeedback = productFeedback;
-	}
 	
 	
-	
-	
-	
-	
+
 
 }

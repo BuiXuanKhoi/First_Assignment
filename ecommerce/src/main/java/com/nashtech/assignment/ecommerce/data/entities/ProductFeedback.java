@@ -1,5 +1,7 @@
 package com.nashtech.assignment.ecommerce.data.entities;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,90 +17,53 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "product_feedback")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class ProductFeedback {
 	
-	public ProductFeedback() {}
 	
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "feedback_id")
+	@JsonProperty("id")
 	private Integer feedbackId;
 	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Products product;
-	
-	@JsonIgnore
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Users users;
 	
 	
 	@Column(name = "feedback_rating")
-	private float feedbackRating;
+	@JsonProperty("rating")
+	private Float feedbackRating;
 	
 	@Column(name = "feedback_comment")
+	@JsonProperty("comment")
 	private String feedbackComment;
 	
-
-
-
-	public ProductFeedback(Integer feedbackId, Products product, Users users, float feedbackRating,
-			String feedbackComment) {
-		this.feedbackId = feedbackId;
-		this.product = product;
-		this.users = users;
-		this.feedbackRating = feedbackRating;
-		this.feedbackComment = feedbackComment;
-	}
-
-
-	public float getFeedbackRating() {
-		return feedbackRating;
-	}
-
-
-	public void setFeedbackRating(float feedbackRating) {
-		this.feedbackRating = feedbackRating;
-	}
-
-
-	public String getFeedbackComment() {
-		return feedbackComment;
-	}
-
-
-	public void setFeedbackComment(String feedbackComment) {
-		this.feedbackComment = feedbackComment;
-	}
-
-
-	public void setFeedbackId(Integer feedbackId) {
-		this.feedbackId = feedbackId;
-	}
-
-
-
-
-	public Integer getFeedbackId() {
-		return feedbackId;
-	}
+	@Column(name = "comment_day")
+	@JsonProperty("comment at")
+	private Date commentDay;
 	
-	
-	
-	
-	
-
-
-	
-	
+	@Column(name = "update_day")
+	@JsonProperty("update at")
+	private Date updateDay;
 
 }

@@ -20,22 +20,19 @@ import org.springframework.data.annotation.Reference;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Entity
 @Table(name = "customers")
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Customers {
-	
-	
-	
-	
-	public Customers() {
-	}
-
-
-
 
 
 	@Id
@@ -48,78 +45,6 @@ public class Customers {
 	@NonNull
 	private Users users;
 	
-	
-	//----------------------------
-	
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "customers")
-	private List<Orders> orders;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Cart> cart;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "customers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<CartItems> cartItems;
-	
-	
-
-	
-	
-	
-	//---------------------------
-	
-	
-	
-	
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
-
-	public Users getUsers() {
-		return users;
-	}
-
-	public void setUsers(Users users) {
-		this.users = users;
-	}
-
-	
-
-
-	public Date getCustomerDateOfBirth() {
-		return customerDateOfBirth;
-	}
-
-	public void setCustomerDateOfBirth(Date customerDateOfBirth) {
-		this.customerDateOfBirth = customerDateOfBirth;
-	}
-
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-
-	public Long getCustomerPhoneNumber() {
-		return customerPhoneNumber;
-	}
-
-	public void setCustomerPhoneNumber(Long customerPhoneNumber) {
-		this.customerPhoneNumber = customerPhoneNumber;
-	}
-
-
-
-
 
 	@Column(name = "customer_date_of_birth")
 	private Date customerDateOfBirth;
@@ -130,20 +55,15 @@ public class Customers {
 	@Column(name = "customer_phone_numer")
 	private Long customerPhoneNumber;
 
-
-
-
-
 	public Customers(@NonNull Users users, Date customerDateOfBirth, String customerAddress, Long customerPhoneNumber) {
 		this.users = users;
 		this.customerDateOfBirth = customerDateOfBirth;
 		this.customerAddress = customerAddress;
 		this.customerPhoneNumber = customerPhoneNumber;
 	}
+	
+	
 
-	
-	
-	
 	
 
 }

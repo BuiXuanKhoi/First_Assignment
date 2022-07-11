@@ -10,8 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "admins")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Admin {
 	
 	@Id
@@ -24,43 +33,6 @@ public class Admin {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
-	private Users userId;
-
-	public int getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
-
-	public String getAdminGender() {
-		return adminGender;
-	}
-
-	public void setAdminGender(String adminGender) {
-		this.adminGender = adminGender;
-	}
-
-	public Users getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Users userId) {
-		this.userId = userId;
-	}
-
-	public Admin() {
-	}
-
-	public Admin(int adminId, String adminGender, Users userId) {
-		this.adminId = adminId;
-		this.adminGender = adminGender;
-		this.userId = userId;
-	}
-	
-	
-	
-	
+	private Users users;
 
 }

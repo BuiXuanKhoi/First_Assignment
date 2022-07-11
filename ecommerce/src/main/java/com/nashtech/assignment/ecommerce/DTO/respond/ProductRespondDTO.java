@@ -24,17 +24,32 @@ import lombok.Value;
 @AllArgsConstructor
 public class ProductRespondDTO {
 	
-	
+	@JsonProperty("id")
 	private int productId;
+	
+	@JsonProperty("Name")
 	private String productName;
+	
+	@JsonProperty("Price")
 	private int productPrice;
+	
+	@JsonProperty("Describe")
 	private String productDescribe;
+	
+	@JsonProperty("Quantity")
 	private int productQuantity;
+	
+	@JsonProperty("Create Day")
 	private Date productCreateDay;
+	
+	@JsonProperty("Modify Days")
 	private Date productUpdateDay;
 	
 	@JsonIgnore
 	private ProductCatogery productCatogery;
+	
+	@JsonProperty("Rating")
+	private Float productRating;
 	
 	
 	
@@ -85,22 +100,9 @@ public class ProductRespondDTO {
 		this.productUpdateDay = productUpdateDay;
 	}
 	
-	@JsonIgnore // Prevent expose all category field
-	public ProductCatogery getProductCatogery() {
-		return productCatogery;
-	}
+
 	
-	@JsonIgnore
-	// Expose only category id
-	@JsonProperty("Catogery ID")
-	public int getProductCatogeryId() {
-		return productCatogery.getProductCatogeryId();
-	}
-	
-	@JsonIgnore
-	public void setProductCatogery(ProductCatogery productCatogery) {
-		this.productCatogery = productCatogery;
-	}
+
 	
 	
 	
