@@ -2,6 +2,8 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +38,7 @@ public class CartController {
 	@PutMapping
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public CartItems saveCartItems(
-			@RequestBody CartDetailRequestDTO cartDetailRequestDTO,
+			@Valid @RequestBody CartDetailRequestDTO cartDetailRequestDTO,
 			@RequestParam(name = "product", required = true) int productId
 			) {
 		return this.carItemService.saveCartItem(cartDetailRequestDTO, productId);

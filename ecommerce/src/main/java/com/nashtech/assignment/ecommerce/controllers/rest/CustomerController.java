@@ -2,6 +2,8 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class CustomerController {
 	
 	@PutMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public Customers editCustomerInfo(@RequestBody Customers customers) {
+	public Customers editCustomerInfo( @Valid @RequestBody Customers customers) {
 		return this.customerService.updateCustomer(customers);
 	}
 	

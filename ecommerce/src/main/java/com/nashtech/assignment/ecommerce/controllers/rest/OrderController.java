@@ -2,6 +2,8 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +34,7 @@ public class OrderController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public Orders createOrder(@RequestBody OrderRequestDTO orderRequestDTO){
+	public Orders createOrder( @Valid @RequestBody OrderRequestDTO orderRequestDTO){
 		return this.orderService.createOrders(orderRequestDTO);
 	}
 	

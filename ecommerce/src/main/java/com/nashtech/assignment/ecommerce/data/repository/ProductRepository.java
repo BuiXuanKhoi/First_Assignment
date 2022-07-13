@@ -19,9 +19,13 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
 	
 	
 	@Query(value = "select * from products "
-			+ " where products.product_catogery_id = "
-			+ "(select product_catogery_id from product_catogery where product_catogery_name = :catogeryName)", nativeQuery = true)
-	Page<Products> getPageProductByCatogery(String catogeryName, Pageable pageable);
+			+ "where products.product_catogery_id = "
+			+ ":productCatogeryId", nativeQuery = true)
+	Page<Products> getPageProductByCatogery(int productCatogeryId, Pageable pageable);
+	
+	@Query(value = "select * from products", nativeQuery = true)
+	Page<Products> getPageProducts(Pageable pageable);
+	
 	
 	
 	

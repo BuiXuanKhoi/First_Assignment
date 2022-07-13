@@ -12,17 +12,18 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
+
 
 @Component
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 	
-	private static final Logger log = LoggerFactory.getLogger(JwtAuthEntryPoint.class);
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		log.error("Unauthorized error: {}", authException.getMessage());
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+//			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
+		throw new UnAuthorizationException("Cannot authorize user for this method");
 		
 	}
 

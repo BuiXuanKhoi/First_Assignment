@@ -18,97 +18,38 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Value;
 
-
-
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ProductRespondDTO {
 	
 	@JsonProperty("id")
 	private int productId;
 	
-	@JsonProperty("Name")
+	@JsonProperty("name")
 	private String productName;
 	
-	@JsonProperty("Price")
+	@JsonProperty("image")
+	private String productImage;
+	
+	@JsonProperty("price")
 	private int productPrice;
 	
-	@JsonProperty("Describe")
+	@JsonProperty("describe")
 	private String productDescribe;
 	
-	@JsonProperty("Quantity")
+	@JsonProperty("quantity")
 	private int productQuantity;
 	
-	@JsonProperty("Create Day")
+	@JsonProperty("create at")
 	private Date productCreateDay;
 	
-	@JsonProperty("Modify Days")
+	@JsonProperty("modify at")
 	private Date productUpdateDay;
 	
-	@JsonIgnore
-	private ProductCatogery productCatogery;
-	
-	@JsonProperty("Rating")
-	private Float productRating;
-	
-	
-	
-
-	//-----------------------------Getter and Setter---------------------------
-	
-	
-	public int getProductId() {
-		return productId;
-	}
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-	public String getProductName() {
-		return productName;
-	}
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-	public int getProductPrice() {
-		return productPrice;
-	}
-	public void setProductPrice(int productPrice) {
-		this.productPrice = productPrice;
-	}
-	public String getProductDescribe() {
-		return productDescribe;
-	}
-	public void setProductDescribe(String productDescribe) {
-		this.productDescribe = productDescribe;
-	}
-	public int getProductQuantity() {
-		return productQuantity;
-	}
-	public void setProductQuantity(int productQuantity) {
-		this.productQuantity = productQuantity;
-	}
-	public Date getProductCreateDay() {
-		return productCreateDay;
-	}
-	public void setProductCreateDay(Date productCreateDay) {
-		this.productCreateDay = productCreateDay;
-	}
-	public Date getProductUpdateDay() {
-		return productUpdateDay;
-	}
-	public void setProductUpdateDay(Date productUpdateDay) {
-		this.productUpdateDay = productUpdateDay;
-	}
-	
-
-	
-
-	
-	
-	
-	
-	
-
+	@JsonProperty("type")
+	private String catogery;
 
 	
 }

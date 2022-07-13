@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 			
 		}
 		
-		throw new ResourceNotFoundException("Your Cart Still Empty");
+		throw new ResourceNotFoundException("Your Cart Is Empty");
 	
 	}
 

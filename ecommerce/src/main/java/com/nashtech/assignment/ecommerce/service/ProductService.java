@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.apache.catalina.connector.Response;
 import org.hibernate.annotations.Any;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +21,7 @@ import com.nashtech.assignment.ecommerce.data.entities.Products;
 
 public interface ProductService {
 	
-	public List<ProductRespondDTO> getAllProducts();
+	public Page<ProductRespondDTO> getAllProducts(String mode, int page, int size);
 	
 	public ProductRespondDTO getProductById(int id);
 	
@@ -33,7 +34,9 @@ public interface ProductService {
 	public ProductRespondDTO addNewProduct(ProductRequestDTO productRequest, String catogeryName);
 	
 	
-	public Page<ProductRespondDTO> getListProductByCatogery(String name, String mode, int page, int size);
+	public Page<ProductRespondDTO> getListProductByCatogery(int productCatogeryId, String mode, int page, int size);
+	
+	public List<ProductCatogery> getAllCatogeries();
 	
 	
 

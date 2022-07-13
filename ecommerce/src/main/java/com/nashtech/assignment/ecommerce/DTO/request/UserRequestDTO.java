@@ -8,6 +8,15 @@ import javax.validation.constraints.NotBlank;
 
 import com.nashtech.assignment.ecommerce.data.entities.Roles;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserRequestDTO {
 	
 
@@ -24,42 +33,6 @@ public class UserRequestDTO {
 	
 	@NotBlank(message = "Please enter user name")
 	private String userName;
-	
-	
-
-	
-	//-------------------------------------------------------Getter & Setter-----------------------------------------------
-
-
-
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	
-	
-	
 
 
 }

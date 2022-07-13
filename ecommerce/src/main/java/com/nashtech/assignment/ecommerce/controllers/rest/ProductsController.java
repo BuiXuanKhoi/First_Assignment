@@ -47,7 +47,6 @@ public class ProductsController
 {
 	private ProductService productService;
 	
-	private static final Logger log = LoggerFactory.getLogger(ProductsController.class);
 
 	
 	
@@ -63,7 +62,7 @@ public class ProductsController
 	
 	@PostMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public ProductRespondDTO addNewProducts( @RequestBody ProductRequestDTO productRequest,
+	public ProductRespondDTO addNewProducts( @Valid @RequestBody ProductRequestDTO productRequest,
 			@RequestParam(name = "catogery", required = true, defaultValue = "Tablet") String catogeryName) 
 	{
 		  return this.productService.addNewProduct(productRequest, catogeryName);
@@ -71,30 +70,45 @@ public class ProductsController
 	
 	@PatchMapping
 	@PreAuthorize("hasAuthority('CUSTOMER')")
-	public ProductRespondDTO updateProducts( @RequestBody ProductUpdateDTO productRequestDTO)
+	public ProductRespondDTO updateProducts( @Valid @RequestBody ProductUpdateDTO productRequestDTO)
 	{
 		return this.productService.updateProduct(productRequestDTO);
 	}
 	
 	
-	@GetMapping("/{name}")
+	@GetMapping("/{id}")
 	@PreAuthorize("permitAll()")
-	public Page<ProductRespondDTO> getListProductByCategory(@PathVariable("name") String name,
-			@RequestParam(name = "mode", required = false, defaultValue = "asc") String mode,
-			@RequestParam(name = "size", required = false, defaultValue = "10") String size,
+	public Page<ProductRespondDTO> getListProductByCategory(@PathVariable("id") int id,
+			@RequestParam(name = "mode", required = false, defaultValue = "a") String mode,
+			@RequestParam(name = "size", required = false, defaultValue = "1") String size,
 			@RequestParam(name = "page",required = false, defaultValue = "1") String page
 			){
 		int sizeConvert = Integer.parseInt(size);
 		int pageConvert = Integer.parseInt(page);
-		return  this.productService.getListProductByCatogery(name, mode, pageConvert, sizeConvert);
+		return  this.productService.getListProductByCatogery(id, mode, pageConvert, sizeConvert);
 	}
 	
 	@GetMapping
 	@PermitAll
 	@PreAuthorize("permitAll()")
-	public List<ProductRespondDTO> getAllProducts()
+	public Page<ProductRespondDTO> getAllProducts(
+			@RequestParam(name = "mode", required = false, defaultValue = "asc") String mode,
+			@RequestParam(name = "size", required = false, defaultValue = "5") String size,
+			@RequestParam(name = "page", required = false, defaultValue = "0") String page)
 	{
-		return this.productService.getAllProducts();
+		int sizeConvert = Integer.parseInt(size);
+		int pageConvert = Integer.parseInt(page);
+		
+		return this.productService.getAllProducts(mode,pageConvert,sizeConvert);
 	}
+	
+	@GetMapping("/catogeries")
+	@PermitAll
+	@PreAuthorize("permitAll()")
+	public List<ProductCatogery> getAllCatogeries(){
+		return this.productService.getAllCatogeries();
+	}
+	
+	
 	
 }

@@ -18,7 +18,6 @@ public class ErrorResponse {
 
 
 	public ErrorResponse(int status, String message) {
-		super();
 		this.status = status;
 		this.message = message;
 	}
@@ -52,7 +51,6 @@ public class ErrorResponse {
 
 
 	public ErrorResponse(int status, String message, Map<String, String> validateMessage) {
-		super();
 		this.status = status;
 		this.message = message;
 		this.validateMessage = validateMessage;

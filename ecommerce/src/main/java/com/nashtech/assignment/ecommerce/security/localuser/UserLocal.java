@@ -21,12 +21,8 @@ public class UserLocal {
 		{
 			return userName;
 		}
+		
 		throw new ResourceNotFoundException("User Not Found. Maybe you haven't log in");
 	}
-	
-//	public String getRoleUser() {
-//		UserDetails userDetails =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		Collection<? extends GrantedAuthority> role = userDetails.getAuthorities();
-//	}
 
 }

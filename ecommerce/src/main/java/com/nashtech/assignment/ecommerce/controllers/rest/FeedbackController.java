@@ -2,6 +2,8 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -53,7 +55,7 @@ public class FeedbackController {
 	
 	@PatchMapping
 	@PreAuthorize("hasRole('CUSTOMER') or hasAuthority('ADMIN')")
-	public ProductFeedback updateFeedback(@RequestBody FeedbackRequestDTO feedbackRequestDTO,
+	public ProductFeedback updateFeedback( @Valid @RequestBody FeedbackRequestDTO feedbackRequestDTO,
 			@RequestParam(name = "id", required = true) int productId) {
 		return this.productFeedbackService.updateFeedback(feedbackRequestDTO, productId);
 	}

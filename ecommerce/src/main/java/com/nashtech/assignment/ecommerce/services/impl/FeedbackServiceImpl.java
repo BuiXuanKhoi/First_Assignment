@@ -87,7 +87,7 @@ public class FeedbackServiceImpl implements ProductFeedbackService {
 		
 		if(productOptional.isPresent()) {
 			int updateId = this.productFeedbackRepository.getFeedbackByUserAndProduct(productId, users.getUserId()).getFeedbackId();
-			
+			productFeedback.setUsers(users);
 			productFeedback.setFeedbackId(updateId);
 			productFeedback.setProduct(productOptional.get());
 			productFeedback.setUpdateDay(new Date());

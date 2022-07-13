@@ -59,13 +59,13 @@ public class AuthController {
 
 
 	@PostMapping("/login")
-	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest)
+	public ResponseEntity<?> authenticateUser( @Valid @RequestBody LoginRequest loginRequest)
 	{
 		return this.authServiceImpl.loginAccount(loginRequest);	
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> continueRegisterCustomer(@RequestBody RegisterCustomer registerCustomer)
+	public ResponseEntity<?> continueRegisterCustomer( @Valid @RequestBody RegisterCustomer registerCustomer)
 	{
 		return this.authServiceImpl.continueRegisterCustomer(registerCustomer);		
 	}
@@ -73,7 +73,7 @@ public class AuthController {
 	
 	
 	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest)
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest)
 	{
 		return this.authServiceImpl.registerUser(signupRequest);	
 	}

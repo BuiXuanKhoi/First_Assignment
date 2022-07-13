@@ -45,7 +45,6 @@ public class ProductServiceImpl implements ProductService {
 	
 	private ProductCatogeryRepository productCatogeryRepository;
 	
-	private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
 
 	
@@ -60,22 +59,37 @@ public class ProductServiceImpl implements ProductService {
 	
 
 	@Override
-	public List<ProductRespondDTO> getAllProducts()
+	public Page<ProductRespondDTO> getAllProducts(String mode, int page, int size)
 	{
-		List<Products> list = this.productRepository.findAll();
-		if(!list.isEmpty()) 
+
+		Pageable pageable = createPage(mode, page, size);
+		Page<Products> pageProducts = this.productRepository.getPageProducts(pageable);
+		if(pageProducts.hasContent()) 
 		{
-			return convertListToListDTO(list);
+			Page<ProductRespondDTO> pageProductDTO = pageProducts.map(this::convertToProductDTO);
+			return pageProductDTO;
 		}
 		
-		throw new ResourceNotFoundException("Cannot find any products in storage");
+		throw new ResourceNotFoundException("Cannot get Page at this size");
 	}
 	
-	public List<ProductRespondDTO> convertListToListDTO(List<Products> list) {
-		List<ProductRespondDTO> listDTO = new ArrayList<ProductRespondDTO>();
-		list.forEach(product -> listDTO.add(modelMapper.map(product, ProductRespondDTO.class)));
-		return listDTO;
+	
+	
+	@Override
+	public Page<ProductRespondDTO> getListProductByCatogery(int productCatogeryId, String mode, int page, int size)
+	{		
+		Pageable pageable = createPage(mode,page,size);
+		Page<Products> pageProducts = this.productRepository.getPageProductByCatogery(productCatogeryId, pageable);
+
+		if( pageProducts != null) 
+		{
+			Page<ProductRespondDTO> pageProductDTO = pageProducts.map(this::convertToProductDTO);
+			return pageProductDTO;
+		} 
+		
+		throw new ResourceNotFoundException("Catogery Not Found !");
 	}
+	
 	
 
 	@Override
@@ -129,20 +143,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
-	@Override
-	public Page<ProductRespondDTO> getListProductByCatogery(String name, String mode, int page, int size)
-	{
-		Pageable pageable = createPage(mode,page,size);
-		
-		Page<Products> pageProducts = this.productRepository.getPageProductByCatogery(name, pageable);
-		if( pageProducts != null) 
-		{
-			Page<ProductRespondDTO> pageProductDTO = pageProducts.map(this::convertToProductDTO);
-			return pageProductDTO;
-		}
-		
-		throw new ResourceNotFoundException("Catogery Not Found !");
-	}
+
 	
 	private ProductRespondDTO convertToProductDTO(Products products) {
 		return modelMapper.map(products, ProductRespondDTO.class);
@@ -167,6 +168,12 @@ public class ProductServiceImpl implements ProductService {
 	public ResponseEntity<?> deleteProduct() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<ProductCatogery> getAllCatogeries() {
+		return this.productCatogeryRepository.findAll();
 	}
 
 

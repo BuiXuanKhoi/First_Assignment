@@ -47,7 +47,11 @@ public class ProductCatogery implements Serializable {
 	private String productCatogeryName;
 	
 	@OneToMany(mappedBy = "productCatogery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Products> ListProducts;
+	
+	@Column(name = "product_catogery_describe")
+	private String productCatogeryDescribe;
 
 	public ProductCatogery(Integer productCatogeryId, @NonNull String productCatogeryName) {
 		this.productCatogeryId = productCatogeryId;

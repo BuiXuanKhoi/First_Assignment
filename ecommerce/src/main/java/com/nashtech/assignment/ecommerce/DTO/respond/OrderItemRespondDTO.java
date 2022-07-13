@@ -6,6 +6,16 @@ import com.nashtech.assignment.ecommerce.data.entities.Customers;
 import com.nashtech.assignment.ecommerce.data.entities.Orders;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class OrderItemRespondDTO {
 	
 	@JsonProperty("id")

@@ -8,10 +8,13 @@ import com.nashtech.assignment.ecommerce.data.entities.Users;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerRespondDTO {
@@ -27,45 +30,6 @@ public class CustomerRespondDTO {
 	
 	@JsonProperty("Address")
 	private String customerAddress;
-	
-
-	
-	
-	//-------------------------------------------------Getter & Setter------------------------------------
-	
-
-
-	public Date getCustomerDateOfBirth() {
-		return customerDateOfBirth;
-	}
-
-	public void setCustomerDateOfBirth(Date customerDateOfBirth) {
-		this.customerDateOfBirth = customerDateOfBirth;
-	}
-
-	public String getCustomerPhoneNumber() {
-		return customerPhoneNumber;
-	}
-
-	public void setCustomerPhoneNumber(String customerPhoneNumber) {
-		this.customerPhoneNumber = customerPhoneNumber;
-	}
-
-	public String getCustomerAddress() {
-		return customerAddress;
-	}
-
-	public void setCustomerAddress(String customerAddress) {
-		this.customerAddress = customerAddress;
-	}
-	
-	
-
-
-
-
-
-	
 	
 	
 
