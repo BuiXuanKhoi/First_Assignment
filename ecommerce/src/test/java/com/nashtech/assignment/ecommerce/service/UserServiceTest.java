@@ -28,6 +28,7 @@ import com.nashtech.assignment.ecommerce.data.entities.Roles;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
+import com.nashtech.assignment.ecommerce.security.localuser.UserLocal;
 import com.nashtech.assignment.ecommerce.services.impl.UserServiceImpl;
 
 public class UserServiceTest {
@@ -46,6 +47,8 @@ public class UserServiceTest {
 	
 	Roles roles;
 	
+	UserLocal userLocal;
+	
 	@BeforeEach
 	public void init() {
 		userService = mock(UserService.class);
@@ -55,6 +58,7 @@ public class UserServiceTest {
 		userRespondDTO = mock(UserRespondDTO.class);
 		modelMapper = mock(ModelMapper.class);
 		roles = mock(Roles.class);
+		userLocal = mock(UserLocal.class);
 	}
 	
 
@@ -74,6 +78,13 @@ public class UserServiceTest {
 		ResourceNotFoundException resourceNotFoundException = assertThrows(ResourceNotFoundException.class,
 				()->userServiceImpl.findUserByName("NaN"));
 		assertEquals(resourceNotFoundException.getMessage(),"User Not Found");
+	}
+	
+	public void whenUpdateUser_shouldReturnUser_whenUserFound() {
+		
+		String localUserName = "Khoi";
+		when(userLocal.getLocalUser()).thenReturn(localUserName);
+		
 	}
 
 }
