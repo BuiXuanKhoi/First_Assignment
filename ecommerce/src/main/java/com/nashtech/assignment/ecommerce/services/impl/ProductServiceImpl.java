@@ -165,7 +165,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
-	public ResponseEntity<?> deleteProduct() {
+	public ResponseEntity<?> deleteProduct(int productId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

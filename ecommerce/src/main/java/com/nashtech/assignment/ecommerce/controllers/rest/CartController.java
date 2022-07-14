@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nashtech.assignment.ecommerce.DTO.request.CartDetailRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.MessageRespond;
 import com.nashtech.assignment.ecommerce.data.entities.CartItems;
 import com.nashtech.assignment.ecommerce.service.CarItemService;
 
@@ -48,7 +50,7 @@ public class CartController {
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
 	public ResponseEntity<?> deleteAllCartItemByOwner(){
 		this.carItemService.deleteAllCartItemByOwner();
-		return ResponseEntity.ok("Delete Success"); 
+		return ResponseEntity.ok(new MessageRespond(HttpStatus.OK.value(),"Delete Success")); 
 	}
 	
 	@DeleteMapping("/{id}")

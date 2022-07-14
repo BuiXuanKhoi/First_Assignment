@@ -25,7 +25,7 @@ public interface ProductService {
 	
 	public ProductRespondDTO getProductById(int id);
 	
-	public ResponseEntity<?> deleteProduct();
+	public ResponseEntity<?> deleteProduct(int productId);
 	
 	
 	public ProductRespondDTO updateProduct( ProductUpdateDTO productUpdateDTO);

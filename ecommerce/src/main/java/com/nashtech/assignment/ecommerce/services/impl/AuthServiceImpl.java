@@ -21,6 +21,7 @@ import com.nashtech.assignment.ecommerce.data.repository.AdminRepository;
 import com.nashtech.assignment.ecommerce.data.repository.CustomerRepository;
 import com.nashtech.assignment.ecommerce.data.repository.RoleRepository;
 import com.nashtech.assignment.ecommerce.data.repository.UserRepository;
+import com.nashtech.assignment.ecommerce.exception.ApiDeniedException;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import com.nashtech.assignment.ecommerce.payload.request.LoginRequest;
@@ -34,6 +35,7 @@ import com.nashtech.assignment.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailImpl;
 import com.nashtech.assignment.ecommerce.service.AuthService;
 import com.nashtech.assignment.ecommerce.service.CustomerService;
+import com.nashtech.assignment.ecommerce.service.UserService;
 
 
 @Service
@@ -57,13 +59,15 @@ public class AuthServiceImpl implements AuthService {
 	
 	private final AdminRepository adminRepository;
 	
+	private final UserService userService;
+	
 	
 
 	
 	@Autowired
 	public AuthServiceImpl(CustomerRepository customerRepository, UserRepository userRepository, JwtUtils jwtUtils,
 			JwtAuthTokenFilter jwtAuthTokenFilter, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
-			AuthenticationManager authenticationManager, CustomerService customerService, AdminRepository adminRepository) {
+			AuthenticationManager authenticationManager, CustomerService customerService, AdminRepository adminRepository, UserService userService) {
 		this.customerRepository = customerRepository;
 		this.userRepository = userRepository;
 		this.jwtUtils = jwtUtils;
@@ -73,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
 		this.authenticationManager = authenticationManager;
 		this.customerService = customerService;
 		this.adminRepository = adminRepository;
+		this.userService = userService;
 	}
 
 
@@ -163,11 +168,19 @@ public class AuthServiceImpl implements AuthService {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		
-		return ResponseEntity.ok(new JwtRespond(jwt, 
-												userDetailImpl.getId(), 
-												userDetailImpl.getUsername(), 
-												userDetailImpl.getUserEmail(), 
-												roles.get(0)));
+		Users user = this.userRepository.findByUserName(userDetailImpl.getUsername()).get();
+		
+		if(user.getStatus())
+		{
+			return ResponseEntity.ok(new JwtRespond(jwt, 
+					userDetailImpl.getId(), 
+					userDetailImpl.getUsername(), 
+					userDetailImpl.getUserEmail(), 
+					roles.get(0)));
+		}
+		
+		throw new UnAuthorizationException("User Account Has Been Locked");
+
 		}catch (Exception e) {
 			throw new ResourceNotFoundException("Cannot Login :  " + e.getMessage());
 		}

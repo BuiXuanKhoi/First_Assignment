@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,7 @@ public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-//			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
-		throw new UnAuthorizationException("Cannot authorize user for this method");
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
 		
 	}
 

@@ -25,10 +25,10 @@ public class CustomerRespondDTO {
 	private Date customerDateOfBirth;
 	
 	
-	@JsonProperty("Phone Number")
+	@JsonProperty("phone number")
 	private String customerPhoneNumber;
 	
-	@JsonProperty("Address")
+	@JsonProperty("address")
 	private String customerAddress;
 	
 	

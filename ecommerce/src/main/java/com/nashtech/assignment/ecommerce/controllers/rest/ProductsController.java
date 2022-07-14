@@ -77,6 +77,7 @@ public class ProductsController
 	
 	
 	@GetMapping("/{id}")
+	@PermitAll
 	@PreAuthorize("permitAll()")
 	public Page<ProductRespondDTO> getListProductByCategory(@PathVariable("id") int id,
 			@RequestParam(name = "mode", required = false, defaultValue = "a") String mode,

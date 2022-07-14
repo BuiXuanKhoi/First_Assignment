@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.nashtech.assignment.ecommerce.DTO.request.CartDetailRequestDTO;
+import com.nashtech.assignment.ecommerce.DTO.respond.MessageRespond;
 import com.nashtech.assignment.ecommerce.data.entities.CartItems;
 import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
@@ -83,7 +85,7 @@ public class CartItemServiceImpl implements CarItemService {
 		Optional<CartItems> cartItemOptional = this.cartItemRepository.findById(cartItemId);
 		if(cartItemOptional.isPresent()) {
 			this.cartItemRepository.deleteById(cartItemId);
-			return ResponseEntity.ok("Delete Success With ID :  " + cartItemId);
+			return ResponseEntity.ok(new MessageRespond(HttpStatus.OK.value(),"Delete Success"));
 		}
 		throw new ResourceNotFoundException("Cart Item Not Found With Id : " + cartItemId);
 	}
@@ -117,7 +119,11 @@ public class CartItemServiceImpl implements CarItemService {
 		String userName = userLocal.getLocalUser();
 		Users users = userRepository.findByUserName(userName).get();
 		System.out.println("Cart Item  " + users.getCartItems().toString());
-		return users.getCartItems();
+		List<CartItems> listCartItems =  users.getCartItems();
+		if(!listCartItems.isEmpty()) {
+			return listCartItems;
+		}
+		throw new ResourceNotFoundException("You haven't put anything in this Cart");
 	}
 	
 	

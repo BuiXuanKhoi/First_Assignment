@@ -38,10 +38,10 @@ public class FeedbackController {
 		
 		return this.productFeedbackService.getFeedbackByProduct(productId);
 	}
-	
+		
 	@PostMapping
 	@PreAuthorize("hasAuthority('CUSTOMER') or hasAuthority('ADMIN')")
-	public ProductFeedback addFeedback(@RequestBody FeedbackRequestDTO feedbackRequestDTO,
+	public ProductFeedback addFeedback( @Valid @RequestBody FeedbackRequestDTO feedbackRequestDTO,
 			@RequestParam(name = "id", required = true) int productId) {
 		return this.productFeedbackService.saveFeedback(feedbackRequestDTO, productId);
 	};

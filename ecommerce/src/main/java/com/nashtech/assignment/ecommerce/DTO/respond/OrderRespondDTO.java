@@ -4,42 +4,23 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderRespondDTO {
 	
 	@JsonProperty("id")
 	private int orderId;
 	
-	@JsonProperty("Quantity")
+	@JsonProperty("quantity")
 	private int orderQuantity;
 	
-	@JsonProperty("Create Day")
+	@JsonProperty("create Day")
 	private Date orderCreateDay;
-
-	public int getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
-	}
-
-	public int getOrderQuantity() {
-		return orderQuantity;
-	}
-
-	public void setOrderQuantity(int orderQuantity) {
-		this.orderQuantity = orderQuantity;
-	}
-
-	public Date getOrderCreateDay() {
-		return orderCreateDay;
-	}
-
-	public void setOrderCreateDay(Date orderCreateDay) {
-		this.orderCreateDay = orderCreateDay;
-	}
-	
-	
-	
-
 }

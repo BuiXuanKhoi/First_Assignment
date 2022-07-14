@@ -3,6 +3,8 @@ package com.nashtech.assignment.ecommerce.controllers.rest;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.security.PermitAll;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Consumer;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nashtech.assignment.ecommerce.DTO.request.BanRequest;
+import com.nashtech.assignment.ecommerce.DTO.request.UnbanRequest;
 import com.nashtech.assignment.ecommerce.DTO.request.UserRequestDTO;
 import com.nashtech.assignment.ecommerce.DTO.request.UserUpdateDTO;
+import com.nashtech.assignment.ecommerce.DTO.request.VertiRequest;
 import com.nashtech.assignment.ecommerce.DTO.respond.UserRespondDTO;
 import com.nashtech.assignment.ecommerce.data.entities.Users;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
@@ -63,6 +68,26 @@ public class UserController {
 		return this.userService.findUserByName(name);
 	}
 	
+	@PostMapping("/status")
+	@PreAuthorize("hasAuthority('ADMIN')")
+	public ResponseEntity<?> blockUser(@RequestBody BanRequest banRequest){
+		return this.userService.blockUser(banRequest);
+	}
+	
+	@PutMapping("/vertify")
+	@PreAuthorize("permitAll()")
+	@PermitAll
+	public ResponseEntity<?> sendUnbanCode(@RequestBody UnbanRequest unbanRequest){
+		System.out.println("Unban");
+		return this.userService.sendUnbanRequest(unbanRequest);
+	}
+	
+	@PutMapping("/status")
+	@PreAuthorize("permitAll()")
+	@PermitAll
+	public ResponseEntity<?> unbanUser(@RequestBody VertiRequest vertiRequest){
+		return this.userService.unbanUser(vertiRequest);
+	}
 
 	
 

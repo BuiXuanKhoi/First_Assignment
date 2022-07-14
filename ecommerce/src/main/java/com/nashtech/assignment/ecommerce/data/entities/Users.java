@@ -57,10 +57,16 @@ public class Users {
 	@Column(name = "user_update_day")
 	private Date userUpDateDay; 
 	
+	@Column(name = "status")
+	private Boolean status;
+	
 	@ManyToOne
 	@JoinColumn(name = "catogery_user_id")
 	@JsonIgnore
 	private Roles roles;
+	
+	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+	private Banned banned;
 	
 	@OneToOne(mappedBy = "users", cascade = CascadeType.ALL )
 	private Customers customers;

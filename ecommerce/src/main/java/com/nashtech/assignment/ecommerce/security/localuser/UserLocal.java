@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
+import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 
 @Component
 public class UserLocal {
@@ -22,7 +23,7 @@ public class UserLocal {
 			return userName;
 		}
 		
-		throw new ResourceNotFoundException("User Not Found. Maybe you haven't log in");
+		throw new UnAuthorizationException("User Not Found. Maybe you haven't log in");
 	}
 
 }

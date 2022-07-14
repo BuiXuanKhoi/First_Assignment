@@ -6,59 +6,28 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nashtech.assignment.ecommerce.data.entities.Roles;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class UserRespondDTO {
 	
-	
+	@JsonProperty("name")
 	private String userName;
 	
+	@JsonProperty("email")
 	private String userEmail;
 	
+	@JsonProperty("created at")
 	private Date userCreateDay;
 	
-	private Roles roles;
-
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-
-	public Date getUserCreateDay() {
-		return userCreateDay;
-	}
-
-	public void setUserCreateDay(Date userCreateDay) {
-		this.userCreateDay = userCreateDay;
-	}
-
-	@JsonIgnore
-	public Roles getRoles() {
-		return roles;
-	}
+	@JsonProperty("role")
+	private String Role;
 	
-	@JsonProperty("Role")
-	public String getRoleId() {
-		return roles.getRoleName();
-	}
-
-	public void setRoles(Roles roles) {
-		this.roles = roles;
-	}
-	
-	
-	
-	
-
 }
