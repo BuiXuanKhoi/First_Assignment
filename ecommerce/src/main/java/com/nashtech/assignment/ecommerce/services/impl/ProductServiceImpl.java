@@ -32,7 +32,7 @@ import com.nashtech.assignment.ecommerce.data.entities.Products;
 import com.nashtech.assignment.ecommerce.data.repository.ProductCatogeryRepository;
 import com.nashtech.assignment.ecommerce.data.repository.ProductRepository;
 import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
-import com.nashtech.assignment.ecommerce.security.jwt.JwtAuthEntryPoint;
+//import com.nashtech.assignment.ecommerce.security.jwt.JwtAuthEntryPoint;
 import com.nashtech.assignment.ecommerce.service.ProductService;
 
 

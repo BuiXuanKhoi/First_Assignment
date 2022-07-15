@@ -19,5 +19,11 @@ public interface BannedRepository extends JpaRepository<Banned, Integer> {
 	@Modifying
 	@Query(value = "update banned set unban_code = :code where user_id = :userId", nativeQuery = true)
 	public void saveVertiCode(String code, int userId);
+	
+	
+	@Modifying
+	@Query(value = "delete from banned where banned_id = :id", nativeQuery = true)
+	public void deleteBanned(int id);
+	
 
 }

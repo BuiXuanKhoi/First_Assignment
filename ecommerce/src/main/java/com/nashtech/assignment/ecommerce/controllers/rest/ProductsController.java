@@ -40,7 +40,7 @@ import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.security.jwt.JwtAuthEntryPoint;
 import com.nashtech.assignment.ecommerce.service.ProductService;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/products")
 public class ProductsController 

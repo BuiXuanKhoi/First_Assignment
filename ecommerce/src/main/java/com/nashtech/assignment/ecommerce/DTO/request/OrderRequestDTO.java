@@ -19,7 +19,6 @@ import lombok.Setter;
 @Setter
 public class OrderRequestDTO {
 	
-	@NotBlank(message = "quantity cannot equal or lower than 0")
 	@NotNull(message = "quantity cannot equal or lower than 0")
 	@JsonProperty("quantity")
 	private int orderQuantity;

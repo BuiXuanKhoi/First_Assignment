@@ -22,7 +22,7 @@ import com.nashtech.assignment.ecommerce.security.jwt.JwtUtils;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailServiceImpl;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -48,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     	auth.userDetailsService(userDetailServiceImpl).passwordEncoder(passwordEncode());
     }
+
     
     @Bean
     @Override

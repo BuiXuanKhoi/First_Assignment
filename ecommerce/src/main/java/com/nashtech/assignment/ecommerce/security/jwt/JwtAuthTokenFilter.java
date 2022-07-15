@@ -10,14 +10,19 @@ import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.nashtech.assignment.ecommerce.DTO.respond.ErrorResponse;
+import com.nashtech.assignment.ecommerce.exception.ResourceNotFoundException;
 import com.nashtech.assignment.ecommerce.exception.UnAuthorizationException;
 import com.nashtech.assignment.ecommerce.security.localuser.UserLocal;
 import com.nashtech.assignment.ecommerce.security.serviceImpl.UserDetailServiceImpl;
@@ -46,10 +51,8 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException 
 	{
-		try
-		{
+
 				String jwt = parseJwt(request);
-				System.out.println(jwt);
 				if(jwt != null && jwtUtils.validateToken(jwt) ) 
 				{
 					String userName = jwtUtils.getUserNameFromToken(jwt);
@@ -59,13 +62,8 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
 					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authentication);
-				}	
-		} 
-		catch (Exception e) 
-		{
-			throw new UnAuthorizationException("CANNOT SET AUTHENTICATION " + e.getMessage()) ;
-		}
-		
+				}
+
 		filterChain.doFilter(request, response);
 		
 	}

@@ -140,7 +140,8 @@ public class UserServiceImpl implements UserService {
 			{
 				users.setStatus(true);
 				this.userRepository.save(users);
-				this.bannedRepository.delete(banned);
+				System.out.println(banned.getBannedId());
+				this.bannedRepository.deleteBanned(banned.getBannedId());
 				return ResponseEntity.ok(new MessageRespond(HttpStatus.OK.value(), "Unban Success !"));
 			}
 			throw new UnAuthorizationException("Wrong Verti code");

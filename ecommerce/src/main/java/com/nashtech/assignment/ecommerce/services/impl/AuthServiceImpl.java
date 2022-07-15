@@ -114,8 +114,8 @@ public class AuthServiceImpl implements AuthService {
 			Roles roleEntity = roleOptional.get();
 			users.setRoles(roleEntity);
 			users.setUserId(0);
-			userRepository.save(users);
-			
+			users.setStatus(true);
+			userRepository.save(users);	
 			return ResponseEntity.ok(new MessageRespond("Register Successfulyl !"));
 		}
 		

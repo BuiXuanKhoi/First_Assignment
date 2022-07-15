@@ -48,7 +48,8 @@ public class UserServiceTest {
 	Roles roles;
 	
 	UserLocal userLocal;
-	
+
+
 	@BeforeEach
 	public void init() {
 		userService = mock(UserService.class);

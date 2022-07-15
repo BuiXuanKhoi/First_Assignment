@@ -34,7 +34,6 @@ public class JwtUtils {
 	
 	public JwtUtils(@Value("${ecommerce.app.jwtSecretKey}") final String jwtSecretKey, @Value("${ecommerce.app.jwtExpiration}") final int jwtExpiration) 
 	{
-		super();
 		this.jwtSecretKey = jwtSecretKey;
 		this.jwtExpiration = jwtExpiration;
 	}
@@ -82,6 +81,9 @@ public class JwtUtils {
 		catch (IllegalArgumentException jwtEmtyException) 
 		{
 			throw new UnAuthorizationException("JWT Token is Empty: "+ jwtEmtyException.getMessage());
+		}
+		catch (Exception e) {
+			throw new UnAuthorizationException("Please Log in");
 		}
 	}
 

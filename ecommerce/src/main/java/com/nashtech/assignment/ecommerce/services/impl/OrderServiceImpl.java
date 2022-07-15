@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 			orders.setUsers(users);
 			orders.setOrderCreateDay(new Date());
 			
-			Orders newOrders =  this.orderRepository.saveAndFlush(orders);
+			Orders newOrders =  this.orderRepository.save(orders);
 			
 			for (CartItems cartItems : cartListing) 
 			{
